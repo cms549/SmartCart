@@ -9,7 +9,6 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -31,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
      */
     TextView tvtot;
 
-    /**
-     * Item name for searching
-     */
-    EditText etitem;
+
+    MapFragment mapfrag;
+
+    SearchFragment searchfrag;
 
 
 
@@ -45,33 +44,58 @@ public class MainActivity extends AppCompatActivity {
 
         tvocc = (TextView) findViewById(R.id.tvocc);
         tvtot = (TextView) findViewById(R.id.tvtot);
-        etitem = (EditText) findViewById(R.id.etitem);
+
+        if(!isOnline()){
+            TextView tv = (TextView) findViewById(R.id.tvmap);
+            tv.setText("No internet connection.");
+        }
+        else if(isConnectedToCart()){
+            mapfrag = new MapFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragMap, mapfrag).commit();
+        }
+
+        searchfrag = new SearchFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragMap, searchfrag).commit();
+
+
 
         setOccupancyField();
         setMyCartBalance();
     }
 
     /**
+     * Checks if you are already connected to a cart
+     * @return
+     */
+    private boolean isConnectedToCart() {
+        // Look at preferences
+        SharedPreferences myPref = getSharedPreferences("SmartCart", 0);
+        Integer id= myPref.getInt("cartID", -1);
+
+        //check shared pref
+        if(id==-1){
+           return false;
+        }
+        return true;
+    }
+
+    /**
      * Sets the balance text
      */
     private void setMyCartBalance() {
-        String s = "Total: \n$";
+        String s = "$";
         // Look at preferences
         SharedPreferences myPref = getSharedPreferences("SmartCart", 0);
         String bal= myPref.getString("cartbalance", "0.00");
         tvtot.setText(s+bal);
     }
 
-
     /**
      * Sets the occupancy text
      */
     private void setOccupancyField() {
         //check if you have internet access
-        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-
+        if(isOnline()) {
             sendARequest();
         }
         else{
@@ -105,6 +129,21 @@ public class MainActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
+
+    /**
+     * Returns true if connected to internet (by data or wifi)
+     * @return
+     */
+    private boolean isOnline(){
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Jumps to my cart screen -> get all info about cart from shared preferences
      * @param view
@@ -136,42 +175,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(nextScreen);
     }
 
-    /**
-     * Jumps to item scan -> barcode reader
-     * @param view
-     */
-    public void goToItemScan(View view) {
-        Intent nextScreen = new Intent(getApplicationContext(), ItemScanScreen.class);
-        //start next screen
-        startActivity(nextScreen);
-    }
 
-    /**
-     * Jumps to item types -> lets you piok the type of item you want
-     * @param view
-     */
-    public void goToItemTypes(View view) {
-        Intent nextScreen = new Intent(getApplicationContext(), ItemTypesScreen.class);
-        //start next screen
-        startActivity(nextScreen);
-    }
 
-    /**
-     * Jumps to list of items -> uses searchable word
-     * @param view
-     */
-    public void goToListItemsScreen(View view) {
-        Intent nextScreen = new Intent(getApplicationContext(), ItemListScreen.class);
-
-        //Sending data to another Activity
-        String selectedItem = ((TextView) etitem).getText().toString();
-
-        //Error check item name
-
-        nextScreen.putExtra("itemName", selectedItem);
-
-        //start next screen
-        startActivity(nextScreen);
-
-    }
 }
