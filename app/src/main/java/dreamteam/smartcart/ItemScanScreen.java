@@ -3,6 +3,7 @@ package dreamteam.smartcart;
 import android.bluetooth.BluetoothDevice;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -10,7 +11,7 @@ import android.widget.Toast;
  * THIS WAS JUST COPY AND PASTED FROM SYNC CART
  * Item scanning screen -> needs to use sql to look at what item it is
  */
-public class ItemScanScreen {
+public class ItemScanScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
