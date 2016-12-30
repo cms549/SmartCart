@@ -70,13 +70,13 @@ public class MainActivity extends AppCompatActivity {
     private boolean isConnectedToCart() {
         // Look at preferences
         SharedPreferences myPref = getSharedPreferences("SmartCart", 0);
-        Integer id= myPref.getInt("cartID", -1);
+        Boolean isconnected= myPref.getBoolean("cartconnected", false);
 
         //check shared pref
-        if(id==-1){
-           return false;
+        if(isconnected){
+           return true;
         }
-        return true;
+        return false;
     }
 
     /**
