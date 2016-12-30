@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         searchfrag = new SearchFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.fragMap, searchfrag).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragsearch, searchfrag).commit();
 
 
 
@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void goToMyCart(View view) {
         Intent nextScreen = new Intent(getApplicationContext(), MyCartScreen.class);
+        nextScreen.putExtra("searchfrag", searchfrag);
         //start next screen
         startActivity(nextScreen);
     }

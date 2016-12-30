@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class SearchFragment extends Fragment {
+import java.io.Serializable;
+
+public class SearchFragment extends Fragment implements Serializable{
 
     /**
      * Item name for searching
