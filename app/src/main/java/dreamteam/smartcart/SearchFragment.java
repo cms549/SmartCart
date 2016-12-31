@@ -16,7 +16,7 @@ public class SearchFragment extends Fragment implements Serializable{
     /**
      * Item name for searching
      */
-    EditText etitem;
+    transient EditText etitem;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

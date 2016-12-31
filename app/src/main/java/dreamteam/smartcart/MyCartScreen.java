@@ -1,5 +1,6 @@
 package dreamteam.smartcart;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -31,7 +32,8 @@ public class MyCartScreen extends AppCompatActivity {
 
         balance=0;
         //set up search bar
-        searchfrag = (SearchFragment) savedInstanceState.getSerializable("searchfrag");
+        Intent intent = getIntent();
+        searchfrag = (SearchFragment) intent.getSerializableExtra("searchfrag");
         if(searchfrag==null){
             searchfrag = new SearchFragment();
         }

@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
                         //String s = "Response is: "+ response.substring(0,500);
-                        tvocc.setText(response.substring(0,500).trim());
+                        tvocc.setText(response.substring(0,10).trim());
                     }
                 }, new Response.ErrorListener() {
                     @Override

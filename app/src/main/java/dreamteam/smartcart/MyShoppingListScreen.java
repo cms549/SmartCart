@@ -70,8 +70,8 @@ public class MyShoppingListScreen extends AppCompatActivity {
             Toast.makeText(this, "You forgot the task title.", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(item.indexOf('\t')>-1 || item.indexOf('\n')>-1){
-            Toast.makeText(this, "Title cannot contain tab or new line character! Please try again.", Toast.LENGTH_SHORT).show();
+        if(item.indexOf('\t')>-1 || item.indexOf('\n')>-1|| item.indexOf(',')>-1){
+            Toast.makeText(this, "Title cannot contain comma, tab, or new line character! Please try again.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -99,7 +99,12 @@ public class MyShoppingListScreen extends AppCompatActivity {
         //update shared pref
         SharedPreferences myPref = getSharedPreferences("SmartCart", 0);
         SharedPreferences.Editor editor = myPref.edit();
-        editor.putStringSet("SL", (Set<String>) listOfItems);
+        String sl = "";
+        for(int i=0; i<listOfItems.size(); i++){
+            sl = sl+listOfItems.get(i)+",";
+        }
+        System.out.println("\nSL = "+sl+"\n");
+        editor.putString("SL", sl);
         editor.commit();
 
     }
@@ -111,12 +116,16 @@ public class MyShoppingListScreen extends AppCompatActivity {
         listOfItems.clear();
         // Look at preferences
         SharedPreferences myPref = getSharedPreferences("SmartCart", 0);
-        ArrayList<String> list= (ArrayList<String>) myPref.getStringSet("SL", null);
+        String sl = myPref.getString("SL","");
+        String[] list = sl.split(",");
         if(list==null){
             return;
         }
-        for(int i=0; i<list.size(); i++){
-            listOfItems.add(list.get(i));
+        for(int i=0; i<list.length; i++){
+            if(list[i]==""){
+                continue;
+            }
+            listOfItems.add(list[i]);
         }
     }
 
