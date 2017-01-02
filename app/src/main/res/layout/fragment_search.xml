@@ -20,7 +20,6 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:text="Scan Item"
-            android:onClick="goToItemScan"
             android:textStyle="normal|bold"
             android:background="@android:color/holo_green_dark" />
 
@@ -29,10 +28,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:id="@+id/btype"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:text="Search by Type"
-            android:onClick="goToItemTypes"
             android:textStyle="normal|bold"
             android:background="@android:color/holo_green_dark" />
 
@@ -54,7 +53,6 @@
             android:layout_height="match_parent"
             android:id="@+id/bsearch"
             android:text="Search"
-            android:onClick="goToListItemsScreen"
             android:background="@android:color/background_dark"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"

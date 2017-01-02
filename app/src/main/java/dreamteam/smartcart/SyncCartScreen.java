@@ -5,10 +5,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 /**
- * Allows user to take a picture of the cart
+ * Allows user to type in code
  * connect to the server(db) so you can get the info of the cart and bluetooth set up
  *
  * In order to work it must have grabbed Carts table from server. Then it looks up RFID to get ID and ID to get Bluetooth Key
@@ -17,28 +18,34 @@ import android.widget.Toast;
  */
 public class SyncCartScreen extends AppCompatActivity {
 
+    /**
+     * Edit text for cart number
+     */
+    EditText etSC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync_cart);
-
+        etSC = (EditText) findViewById(R.id.etSC);
 
     }
 
 
     public void syncCart(View view){
-        //Recoginze the Barcode
-        int barcode=-1;
+        //Recoginze the number
+        String num=etSC.getText().toString();
 
-        if(barcode==-1){
+        if(num.length()!=4){
             //Error with reading code
-            Toast.makeText(this, "Error: Cannot recognize barcode. Please take another picture and try again." , Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error: Code must be 4 numbers long." , Toast.LENGTH_LONG).show();
             return;
         }
 
+        int i = Integer.parseInt(num);
+
         //Look it up in Carts table
-        String btaddr = findCartByBarcode(barcode);
+        String btaddr = findCartByCode(i);
         if(btaddr.equals("-1")){
             Toast.makeText(this, "Error: Cart not recognized in system. Please take another picture and try again." ,Toast.LENGTH_LONG).show();
             //Error with look up
@@ -63,7 +70,7 @@ public class SyncCartScreen extends AppCompatActivity {
         finish();
     }
 
-    private String findCartByBarcode(int barcode) {
+    private String findCartByCode(int code) {
         //look it up in sql table
 
         return "-1";

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,46 +28,47 @@ public class SearchFragment extends Fragment implements Serializable{
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         etitem = (EditText) getView().findViewById(R.id.etitem);
-    }
+        Button scan = (Button) getView().findViewById(R.id.bscan);
+        scan.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent nextScreen = new Intent(getActivity(), ItemScanScreen.class);
+                        //start next screen
+                        startActivity(nextScreen);
+                    }
+                }
+        );
+        Button type = (Button) getView().findViewById(R.id.btype);
+        type.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent nextScreen = new Intent(getActivity(), ItemTypesScreen.class);
+                        //start next screen
+                        startActivity(nextScreen);
+                    }
+                }
+        );
+        Button search = (Button) getView().findViewById(R.id.bsearch);
+        search.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent nextScreen = new Intent(getActivity(), ItemListScreen.class);
 
+                        //Sending data to another Activity
+                        String selectedItem = ((TextView) etitem).getText().toString();
 
-    /**
-     * Jumps to item scan -> barcode reader
-     * @param view
-     */
-    public void goToItemScan(View view) {
-        Intent nextScreen = new Intent(getActivity(), ItemScanScreen.class);
-        //start next screen
-        startActivity(nextScreen);
-    }
+                        //Error check item name
 
-    /**
-     * Jumps to item types -> lets you piok the type of item you want
-     * @param view
-     */
-    public void goToItemTypes(View view) {
-        Intent nextScreen = new Intent(getActivity(), ItemTypesScreen.class);
-        //start next screen
-        startActivity(nextScreen);
-    }
+                        nextScreen.putExtra("itemName", selectedItem);
 
-    /**
-     * Jumps to list of items -> uses searchable word
-     * @param view
-     */
-    public void goToListItemsScreen(View view) {
-        Intent nextScreen = new Intent(getActivity(), ItemListScreen.class);
-
-        //Sending data to another Activity
-        String selectedItem = ((TextView) etitem).getText().toString();
-
-        //Error check item name
-
-        nextScreen.putExtra("itemName", selectedItem);
-
-        //start next screen
-        startActivity(nextScreen);
-
+                        //start next screen
+                        startActivity(nextScreen);
+                    }
+                }
+        );
     }
 
 }
