@@ -1,179 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
 
-    android:background="@android:color/holo_green_light"
+    android:background="@android:color/white"
     tools:context="dreamteam.smartcart.MainActivity">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="ShopRite"
-            android:id="@+id/tvsn"
-            android:layout_weight="1"
-            android:padding="5dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textColor="@android:color/black"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:textAlignment="center" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:background="@android:color/white"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvo"
-                android:text="Occupancy:"
-                android:layout_weight="1"
-                android:textColor="@android:color/black"
-                android:textStyle="normal|bold"
-                android:textSize="24sp"
-                android:textAlignment="center" />
+        app:srcCompat="@drawable/cart"
+        android:id="@+id/imageView3"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:paddingLeft="5dp"
+        android:layout_marginStart="19dp"
+        android:layout_alignBottom="@+id/tvsn"
+        android:layout_alignParentStart="true" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvocc"
-                android:layout_weight="1"
-                android:text="500 shoppers"
-                android:textColor="@android:color/black"
-                android:textAlignment="center"
-                android:textSize="24sp" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/white"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/bcart"
-                android:text="My Cart"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:textStyle="normal|bold"
-                android:background="@android:color/holo_green_dark"
-                android:onClick="goToMyCart" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginTop="10dp"
-                    android:text="Total:"
-                    android:textColor="@android:color/black"
-                    android:textAlignment="center"
-                    android:textStyle="normal|bold"
-                    android:textAllCaps="false"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tvtot"
-                    android:layout_weight="1"
-                    android:text="$100.12"
-                    android:textColor="@android:color/black"
-                    android:textAlignment="center"
-                    android:textStyle="normal|bold"
-                    android:textAllCaps="false"
-                    android:textSize="18sp" />
-
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:text="ShopRite"
+        android:textSize="30dp"
+        android:textColor="@android:color/black"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1">
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:paddingBottom="10dp"
-            android:id="@+id/fragMap"
-            android:background="@android:color/background_light">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Connect To A Cart To Use Map Feature."
-                    android:textColor="@android:color/black"
-                    android:textAlignment="center"
-                    android:textStyle="normal|bold"
-                    android:textAllCaps="false"
-                    android:id="@+id/tvmap" />
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:text="Sync Cart"
-                    android:onClick="goToSyncCart"
-                    android:textStyle="normal|bold" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold|italic"
+        android:id="@+id/tvsn" />
 
-            </LinearLayout>
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/cart"
+        android:id="@+id/imageView2"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:paddingLeft="5dp"
+        android:layout_marginEnd="25dp"
+        android:layout_alignBottom="@+id/tvsn"
+        android:layout_alignParentEnd="true" />
 
-        </FrameLayout>
+    <TextView
+        android:text="Occupancy:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="@android:color/black"
+        android:id="@+id/tvo"
+        android:layout_marginStart="43dp"
+        android:layout_below="@+id/imageView3"
+        android:layout_alignStart="@+id/imageView3" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="4"
-            android:background="@android:color/black"
-            android:text="My Shopping List"
-            android:onClick="goToShoppingList"
-            android:textStyle="normal|bold" />
+    <TextView
+        android:text="500 Shoppers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="@android:color/black"
+        android:id="@+id/tvocc"
+        android:layout_marginStart="12dp"
+        android:layout_below="@+id/tvsn"
+        android:layout_toEndOf="@+id/tvo" />
 
-    </LinearLayout>
+    <Button
+        android:text="My Cart"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvo"
+        android:layout_alignStart="@+id/imageView3"
+        android:layout_marginTop="68dp"
+        android:id="@+id/bcart"
+        android:textColor="@android:color/black"
+        android:background="@drawable/button_border"
+        android:onClick="goToMyCart" />
 
+    <Button
+        android:text="Shopping List"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/bcart"
+        android:layout_alignEnd="@+id/imageView2"
+        android:textColor="@android:color/black"
+        android:background="@drawable/button_border"
+        android:id="@+id/button4"
+        android:onClick="goToShoppingList" />
+
+    <TextView
+        android:text="$100.12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="40dp"
+        android:id="@+id/tvtot"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/tvocc" />
+
+    <TextView
+        android:text="Total:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="40dp"
+        android:id="@+id/textView5"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/bcart"
+        android:layout_marginEnd="12dp" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/fragsearch">
+        android:id="@+id/fragMap"
+        android:background="@android:color/background_light"
+        android:layout_below="@+id/bcart"
+        android:layout_alignParentStart="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            android:id="@+id/connect_cart">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Connect To A Cart To Use Map Feature"
+                android:textColor="@android:color/black"
+                android:textAlignment="center"
+                android:textStyle="italic"
+                android:layout_margin="20dp"
+                android:textSize="17dp"
+                android:id="@+id/tvmap" />
+
+            <Button
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Sync Cart"
+
+                android:textAlignment="center"
+                android:onClick="goToSyncCart"
+                android:background="@drawable/button_border"
+                android:layout_gravity="center"
+                android:textColor="@android:color/black"/>
+
+        </LinearLayout>
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/textView5"
+        android:id="@+id/fragsearch"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/fragMap">
 
     </FrameLayout>
 
-
-</LinearLayout>
+</RelativeLayout>
