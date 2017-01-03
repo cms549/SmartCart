@@ -1,80 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
 
-    android:background="@android:color/holo_green_light"
+    android:background="@android:color/white"
     tools:context="dreamteam.smartcart.SyncCartScreen">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1">
+    <TextView
+        android:text="Sync Cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textColor="@android:color/black"
+        android:textSize="30dp"
+        android:id="@+id/textView7" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
-
-            <Button
-                android:text="Back"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:onClick="back" />
-
-        </LinearLayout>
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Cart Sync"
-            android:layout_weight="2"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textColor="@android:color/black"
-            android:textAlignment="center"
-            android:textStyle="normal|bold" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="Enter Cart Number:"
-                android:background="@android:color/white"
-                android:textColor="@android:color/black"
-                android:textAlignment="center"
-                android:textSize="24sp" />
-
-
+    <TextView
+        android:text="Enter 4 Digit Cart Number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView7"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:textColor="@android:color/black"
+        android:textStyle="italic"
+        android:textSize="20dp"
+        android:id="@+id/textView8" />
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
+        android:hint="Ex: 1234"
+        android:textColorHint="@android:color/black"
+        android:textColor="@android:color/black"
+        android:textAlignment="center"
+        android:background="@drawable/text_border"
         android:ems="10"
-        android:hint="Ex: 451"
-        android:id="@+id/etSC"
-        android:layout_weight="1" />
-
+        android:layout_below="@+id/textView8"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="137dp"
+        android:id="@+id/etSC" />
 
     <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="@android:color/black"
-            android:text="Sync Cart"
-            android:onClick="syncCart"
-            android:textStyle="normal|bold" />
+        android:text="Sync Cart"
+        android:onClick="syncCart"
 
-    </LinearLayout>
+        android:textColor="@android:color/black"
+        android:background="@drawable/button_border"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button3"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
 
 

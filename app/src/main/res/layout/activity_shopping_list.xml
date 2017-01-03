@@ -1,95 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
 
-    android:background="@android:color/holo_green_light"
+
+    android:background="@android:color/white"
     tools:context="dreamteam.smartcart.MyShoppingListScreen">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="1">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            />
-
-        <Button
-            android:text="Back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="back" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="2">
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:text="My Shopping List"
-        android:layout_weight="2"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textSize="30dp"
         android:textColor="@android:color/black"
-        android:textAlignment="center"
-        android:textStyle="normal|bold" />
+        android:id="@+id/textView4" />
 
     <TextView
-        android:layout_width="match_parent"
+        android:text="Hold an Item to Remove it from the List."
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hold an item to remove it from the list."
-        android:layout_weight="1"
-        android:background="@android:color/white"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:textStyle="italic"
         android:textColor="@android:color/black"
-        android:textAlignment="center"
-        android:textSize="18sp" />
-
-        </LinearLayout>
+        android:id="@+id/textView6" />
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
+        android:layout_below="@+id/textView6"
         android:id="@+id/lvSL"
-        android:layout_weight="5"
-        >
 
-    </ListView>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:id="@+id/etSL"
-        android:background="@color/colorAccent"
-        android:layout_margin="1dp"
-        android:hint="Enter item..."
-        android:textColorHint="@android:color/holo_green_dark"
-        android:textAlignment="center"
-        android:textColor="@android:color/holo_green_dark" />
+        android:background="@drawable/button_border"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"
+        android:layout_above="@+id/etSL" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_weight="1"
-        android:background="@android:color/black"
         android:text="Add Item to List"
         android:onClick="addItemToList"
-        android:textStyle="normal|bold" />
+        android:background="@drawable/button_border"
+        android:textColor="@android:color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/button2"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
 
-</LinearLayout>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:textColor="@android:color/black"
+        android:hint="Enter Item..."
+
+        android:textColorHint="@android:color/black"
+        android:ems="10"
+        android:layout_above="@+id/button2"
+        android:layout_alignParentStart="true"
+        android:id="@+id/etSL"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
 
 
