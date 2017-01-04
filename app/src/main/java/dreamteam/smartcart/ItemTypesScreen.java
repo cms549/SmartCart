@@ -33,7 +33,7 @@ public class ItemTypesScreen extends AppCompatActivity {
         lvType = (ListView) findViewById(R.id.lvType);
 
         listOfTypes = new ArrayList<String>();
-        loadFromSP();
+        loadTypes();
 
         ArrayAdapter<String> ad = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listOfTypes);
 
@@ -60,7 +60,7 @@ public class ItemTypesScreen extends AppCompatActivity {
 
     }
 
-    private void loadFromSP() {
+    private void loadTypes() {
         listOfTypes.clear();
         // Look at preferences
         SharedPreferences myPref = getSharedPreferences("SmartCart", 0);
