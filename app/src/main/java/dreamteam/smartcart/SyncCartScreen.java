@@ -1,105 +1,95 @@
 package dreamteam.smartcart;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Set;
+
 /**
- * Allows user to type in code
- * connect to the server(db) so you can get the info of the cart and bluetooth set up
  *
- * In order to work it must have grabbed Carts table from server. Then it looks up RFID to get ID and ID to get Bluetooth Key
- * After this it will connect to Bluetooth.
+ * it will connect to Bluetooth.
  * Once connected it will update SharedPreferences. "cartconnected" = true
  */
 public class SyncCartScreen extends AppCompatActivity {
 
     /**
-     * Edit text for cart number
+     * Data structure to hold bt devices
      */
-    EditText etSC;
+    private ArrayList<String> btDevices;
+    ListView lvSC;
+    ArrayList<String> list;
+
+    private BluetoothAdapter BA;
+    private Set<BluetoothDevice> pairedDevices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sync_cart);
-        etSC = (EditText) findViewById(R.id.etSC);
+        lvSC = (ListView) findViewById(R.id.lvSC);
+        BA = BluetoothAdapter.getDefaultAdapter();
+        if (!BA.isEnabled()) {
+            Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(turnOn, 0);
+            Toast.makeText(getApplicationContext(), "Turned on BT",Toast.LENGTH_LONG).show();
+        }
 
-    }
-
-
-    public void syncCart(View view){
-        //Recoginze the number
-        String num=etSC.getText().toString();
-
-        if(num.length()!=4){
-            //Error with reading code
-            Toast.makeText(this, "Error: Code must be 4 numbers long." , Toast.LENGTH_LONG).show();
+        BA.startDiscovery();
+        pairedDevices = BA.getBondedDevices();
+        if(pairedDevices.size()==0){
+            list.add("NO PAIRED DEVICES AVAILABLE");
             return;
         }
+        list = new ArrayList<String>();
 
-        int i = Integer.parseInt(num);
+        for(BluetoothDevice bt : pairedDevices) list.add(bt.getName());
+        Toast.makeText(getApplicationContext(), "Showing Paired Devices",Toast.LENGTH_SHORT).show();
 
-        //Look it up in Carts table
-        String btaddr = findCartByCode(i);
-        if(btaddr.equals("-1")){
-            Toast.makeText(this, "Error: Cart not recognized in system. Please take another picture and try again." ,Toast.LENGTH_LONG).show();
-            //Error with look up
-            return;
-        }
+        final ArrayAdapter adapter = new  ArrayAdapter(this,android.R.layout.simple_list_item_1, list);
 
-        //Establish a connection with BT device
-        if(connectWithBT(btaddr)){
-            //update shared pref
-            SharedPreferences myPref = getSharedPreferences("SmartCart", 0);
-            SharedPreferences.Editor editor = myPref.edit();
-            editor.putBoolean("cartconnected", true);
-            editor.putString("btcode", btaddr);
-            editor.commit();
-        }
-        else{
-            Toast.makeText(this, "Error: Bluetooth cannot connect. Please try again." ,Toast.LENGTH_LONG).show();
-            return;
-        }
+        lvSC.setAdapter(adapter);
 
-        //Return to previous screen
-        finish();
-    }
-
-    private String findCartByCode(int code) {
-        //look it up in sql table
-
-        return "-1";
-    }
-
-    private boolean connectWithBT(String addr) {
-        //Establish a connection
-        String deviceName = "My_Device_Name";
-
-        BluetoothDevice result = null;
-/*
-        Set<BluetoothDevice> device = adapter.getBondedDevices();
-        if (devices != null) {
-            for (BluetoothDevice device : devices) {
-                if (deviceName.equals(device.getName())) { //if (addr.equals(device.getAddress()))
-                    result = device;
-                    break;
+        lvSC.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> taskList, View v, int pos, long id) {
+                lvSC.invalidateViews();
+                String name = list.get(pos);
+                for(BluetoothDevice bt : pairedDevices) {
+                    if( bt.getName().equals(name)){
+                        connectWithBT(bt);
+                    }
                 }
+
             }
-        }
+        });
 
-*/
 
-        return false;
 
     }
 
-    public void back(View v){
+
+    private void connectWithBT(BluetoothDevice bt) {
+        //Establish a connection
+        //bt.connectGatt();
+
+        //update shared pref
+        SharedPreferences myPref = getSharedPreferences("SmartCart", 0);
+        SharedPreferences.Editor editor = myPref.edit();
+        editor.putBoolean("cartconnected", true);
+        editor.putString("btcode", bt.getAddress());
+        editor.commit();
         finish();
+
     }
 
 }

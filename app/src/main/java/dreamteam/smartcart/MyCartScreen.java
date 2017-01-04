@@ -45,7 +45,7 @@ public class MyCartScreen extends AppCompatActivity {
         loadFromSP();
 
 
-        lvCart = (ListView) findViewById(R.id.lvCart);
+        lvCart = (ListView) findViewById(R.id.lvSearch);
 
         //CREATE ADPATER
         MyCartAdapter ad = new MyCartAdapter(this, R.layout.row_mycart, itemsList);
