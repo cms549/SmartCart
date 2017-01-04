@@ -11,19 +11,6 @@
     tools:context="dreamteam.smartcart.MainActivity">
 
 
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/cart"
-        android:id="@+id/imageView3"
-        android:cropToPadding="true"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
-        android:paddingLeft="5dp"
-        android:layout_marginStart="19dp"
-        android:layout_alignBottom="@+id/tvsn"
-        android:layout_alignParentStart="true" />
-
     <TextView
         android:text="ShopRite"
         android:textSize="30dp"
@@ -35,19 +22,6 @@
         android:layout_marginTop="20dp"
         android:textStyle="bold|italic"
         android:id="@+id/tvsn" />
-
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/cart"
-        android:id="@+id/imageView2"
-        android:cropToPadding="true"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
-        android:paddingLeft="5dp"
-        android:layout_marginEnd="25dp"
-        android:layout_alignBottom="@+id/tvsn"
-        android:layout_alignParentEnd="true" />
 
     <TextView
         android:text="Occupancy:"
@@ -163,5 +137,30 @@
         android:layout_below="@+id/fragMap">
 
     </FrameLayout>
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/sc_logo"
+        android:id="@+id/imageView2"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:paddingLeft="5dp"
+        android:layout_above="@+id/tvocc"
+        android:layout_toEndOf="@+id/tvocc" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/sc_logo"
+        android:id="@+id/imageView3"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:paddingLeft="5dp"
+        android:layout_marginStart="21dp"
+        android:layout_alignBottom="@+id/tvsn"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

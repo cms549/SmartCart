@@ -29,6 +29,7 @@ public class MyShoppingListScreen extends AppCompatActivity {
     private EditText etSL;
     private ListView lvSL;
 
+    ArrayAdapter<String> ad;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +41,7 @@ public class MyShoppingListScreen extends AppCompatActivity {
         listOfItems = new ArrayList<String>();
         loadFromSP();
 
-        ArrayAdapter<String> ad = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listOfItems);
+        ad = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listOfItems);
 
         //Set adapter
         lvSL.setAdapter(ad);
@@ -66,6 +67,7 @@ public class MyShoppingListScreen extends AppCompatActivity {
     public void addItemToList(View view) {
 
         String item = etSL.getText().toString();
+        System.out.println("item read:" +item);
         if(item.isEmpty()){
             Toast.makeText(this, "You forgot the task title.", Toast.LENGTH_SHORT).show();
             return;
@@ -79,6 +81,7 @@ public class MyShoppingListScreen extends AppCompatActivity {
 
         etSL.setText("");
 
+        ad.notifyDataSetChanged();
         //refresh the page
         lvSL.invalidateViews();
 
