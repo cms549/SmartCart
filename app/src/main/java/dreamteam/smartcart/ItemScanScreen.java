@@ -4,6 +4,9 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,10 +16,18 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.gms.vision.barcode.BarcodeDetector;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -31,6 +42,7 @@ public class ItemScanScreen extends AppCompatActivity {
     private Button scanButton;
     private ImageView scannedImage;
     private Uri file;
+    private TextView barcode_txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +51,7 @@ public class ItemScanScreen extends AppCompatActivity {
 
         scanButton = (Button) findViewById(R.id.scanButton);
         scannedImage = (ImageView) findViewById(R.id.scannedImage);
+        barcode_txt= (TextView) findViewById(R.id.barcode_txt);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             scanButton.setEnabled(false);
@@ -119,9 +132,36 @@ public class ItemScanScreen extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
-                scannedImage.setImageURI(file);
+                // scannedImage.setImageURI(file);
+                Bitmap myBitmap= BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.barcode);
+                scannedImage.setImageBitmap(myBitmap);
+
+                //Bitmap myBitmap=((BitmapDrawable)scannedImage.getDrawable()).getBitmap();
+                detectBarcode(myBitmap);
             }
         }
+    }
+
+    public void detectBarcode(Bitmap bitmap){
+        BarcodeDetector detector=new BarcodeDetector.Builder(getApplicationContext()).build();
+        if (!detector.isOperational()){
+            barcode_txt.setText("Could not setup barcode detector");
+            return;
+        }
+
+        Frame frame=new Frame.Builder().setBitmap(bitmap).build();
+        SparseArray<Barcode> barcodes=detector.detect(frame);
+        if (barcodes==null){
+            barcode_txt.setText("Invalid barcode");
+            return;
+        }
+        else{
+            // barcode_txt.setText("No Barcode Detected");
+            Barcode thisCode=barcodes.valueAt(0);
+            barcode_txt.setText(thisCode.rawValue);
+        }
+
+
     }
 
 

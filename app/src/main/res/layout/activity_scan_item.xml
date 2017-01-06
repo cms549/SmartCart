@@ -38,6 +38,7 @@
         android:layout_height="300dp"
         android:id="@+id/scannedImage"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
         android:layout_above="@+id/scanButton"/>
 
     <Button
@@ -51,6 +52,16 @@
         android:onClick="scanItem"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Take a Picture of Barcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/scanButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="11dp"
+        android:textSize="20dp"
+        android:id="@+id/barcode_txt" />
 
 
 </RelativeLayout>

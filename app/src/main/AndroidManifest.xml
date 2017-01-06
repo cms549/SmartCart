@@ -24,7 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
+
         <activity android:name=".MyShoppingListScreen" />
         <activity android:name=".MyCartScreen" />
         <activity android:name=".SyncCartScreen" />
@@ -32,11 +32,6 @@
         <activity android:name=".ItemListScreen" />
         <activity android:name=".ItemTypesScreen" />
         <activity android:name=".MoreInfoScreen"></activity>
-=======
-        <activity android:name=".MyShoppingListScreen"></activity>
-        <activity android:name=".MyCartScreen"></activity>
-        <activity android:name=".SyncCartScreen"></activity>
-        <activity android:name=".ItemScanScreen"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -48,7 +43,7 @@
                 android:resource="@xml/provider_paths"/>
         </provider>
 
->>>>>>> ca71d9439035c810f93102921f221fdccb43acb1
+
     </application>
 
 </manifest>
