@@ -38,18 +38,20 @@ public class SyncCartScreen extends AppCompatActivity {
         setContentView(R.layout.activity_sync_cart);
         lvSC = (ListView) findViewById(R.id.lvSC);
         BA = BluetoothAdapter.getDefaultAdapter();
+        if(BA==null){
+            list = new ArrayList<String>();
+            list.add("CANNOT ACCESS BLUETOOTH ADAPTER");
+            final ArrayAdapter adapter = new  ArrayAdapter(this,android.R.layout.simple_list_item_1, list);
+            lvSC.setAdapter(adapter);
+            return;
+        }
         if (!BA.isEnabled()) {
             Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(turnOn, 0);
             Toast.makeText(getApplicationContext(), "Turned on BT",Toast.LENGTH_LONG).show();
         }
-
         BA.startDiscovery();
         pairedDevices = BA.getBondedDevices();
-        if(pairedDevices.size()==0){
-            list.add("NO PAIRED DEVICES AVAILABLE");
-            return;
-        }
         list = new ArrayList<String>();
 
         for(BluetoothDevice bt : pairedDevices) list.add(bt.getName());
@@ -58,6 +60,10 @@ public class SyncCartScreen extends AppCompatActivity {
         final ArrayAdapter adapter = new  ArrayAdapter(this,android.R.layout.simple_list_item_1, list);
 
         lvSC.setAdapter(adapter);
+        if(pairedDevices.size()==0){
+            list.add("NO PAIRED DEVICES AVAILABLE");
+            return;
+        }
 
         lvSC.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

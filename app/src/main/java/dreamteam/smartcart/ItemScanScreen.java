@@ -34,7 +34,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * THIS WAS JUST COPY AND PASTED FROM SYNC CART
  * Item scanning screen -> needs to use sql to look at what item it is
  */
 public class ItemScanScreen extends AppCompatActivity {
