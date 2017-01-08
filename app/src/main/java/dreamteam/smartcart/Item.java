@@ -17,4 +17,11 @@ public class Item implements Serializable {
         price =p;
     }
 
+    public boolean equals(Item i){
+        if(item.toLowerCase().equals(i.item.toLowerCase())){
+            return true;
+        }
+        return false;
+    }
+
 }
