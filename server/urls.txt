@@ -1,0 +1,15 @@
+What server has to do:
+	1) /occupancy 
+		get returns the current occupancy 
+		post (increments the occupancy)
+	2) /topics
+		get returns list of topics
+		post search for specific topic
+		
+	3) /items
+		get returns list of all items
+		post returns list of all items matching search keyword or id number
+			checks in form for:
+				idnum
+				keyword
+	
