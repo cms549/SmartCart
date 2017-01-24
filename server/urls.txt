@@ -2,6 +2,9 @@ What server has to do:
 	1) /occupancy 
 		get returns the current occupancy 
 		post (increments the occupancy)
+		/leave
+		decrements occupancy by one
+		
 	2) /topics
 		get returns list of topics
 		post search for specific topic
