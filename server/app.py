@@ -1,13 +1,17 @@
-from flask import Flask, request
-from dbfunctions import *
-from flask.ext.pymongo import PyMongo
+#!flask/bin/python
+from flask import Flask, request, render_template
+from flask_pymongo import MongoClient
+
+#connection = MongoClient('mongodb://localhost:27017/')
+mongo_server = "localhost"
+mongo_port = "27017"
+connect_string = "mongodb://"+ mongo_server+ ":"+ mongo_port
 
 app = Flask(__name__)
-mongo = PyMongo(app)
+connection = MongoClient(connect_string)    
+db = connection.test
 
-# connect to another MongoDB database on the same host
-#app.config['TYPES'] = 'types'
-#mongo2 = PyMongo(app, config_prefix='MONGO2')
+
 
 occ = 0
 			
@@ -15,22 +19,22 @@ occ = 0
 def occupancy():
 	#grab the occupancy from the database
 	occupancy = ""+occ
-    if request.method == 'GET':
-        return occupancy
-    if request.method == "POST":
-        global occ
+	if request.method == 'GET':
+		return render_template('test.html', data=occupancy)
+	if request.method == "POST":
+		global occ
 		#update the occupancy from the database 
-		occ++
+		occ= occ+1
 		occupancy = ""+occ
-		return occupancy
+		return render_template('test.html', data=occupancy)
 
 @app.route('/leave', methods=['GET', 'POST'])
 def leave():
-    global occ
+	global occ
 	#update the occupancy from the database 
-	occ--
+	occ= occ-1
 	occupancy = ""+occ
-	return occupancy
+	return render_template('test.html', data=occupancy)
 		
 
 		
@@ -38,33 +42,39 @@ def leave():
 def topics():
 	if request.method == "POST":
 		topic = request.form['topic']
-        #search for specific topic
-		ans = mongo.db.topics.find_one_or_404({'topic': topic})
-		return ans
+		#search for specific topic
+		ans = db.topics.find_one_or_404({'topic': topic})
+		return render_template('test.html', data=ans)
 	#grab the list of topics from the database
-	topics = mongo.db.topics.find({})
-    return topics
+	topics = db.topics.find()
+	t=[]
+	for r in range(0, topics.count()):
+		t.append( topics.next().get("name"))
+	return render_template('test.html', data=t)
 	
 	
 @app.route('/items', methods=['GET', 'POST'])
 def items():
-    if request.method == 'GET':
+	if request.method == 'GET':
 		#grab the items from the database
-		its = mongo.db.items.find({})
-        return its
-    if request.method == "POST":
+		its = db.items.find().toArray()
+		t=[]
+		for r in range(0, its.count()):
+			t.append( its.next())
+		return render_template('test.html', data=t)
+	if request.method == "POST":
 		idnum = int(request.form['idnum'])
-		if idnum != -1
+		if idnum != -1:
 			#search for specific number
-			ans = mongo.db.items.find({'_id': idnum})
-			return ans
+			ans = db.items.find({'_id': idnum})
+			return render_template('test.html', data=ans)
 		#search by keyword
 		keyword = request.form['keyword']
 		#search for  keyword
 		#db.users.findOne({"username" : /.*son.*/i});
-		ans = mongo.db.items.find({'name': keyword})
-		return ans
+		ans = db.items.find({'name': keyword})
+		return render_template('test.html', data=ans)
         
 
 if __name__ == '__main__':
-    app.run()
+	app.run()

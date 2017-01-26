@@ -1,6 +1,5 @@
 package dreamteam.smartcart;
 
-
 import java.io.Serializable;
 
 /**
