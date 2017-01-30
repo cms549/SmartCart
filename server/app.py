@@ -75,6 +75,22 @@ def items():
 		ans = db.items.find({'name': keyword})
 		return render_template('test.html', data=ans)
         
+@app.route('/location', methods=['GET', 'POST'])
+def location():
+	if request.method == "POST":
+		idnum = int(request.form['idnum'])
+		if idnum != -1:
+			#search for specific number
+			ans = db.location.find({'_id': idnum})
+			return render_template('test.html', data=ans)
+	#grab the rfid locaitons from the database
+		its = db.location.find().toArray()
+		t=[]
+		for r in range(0, its.count()):
+			t.append( its.next())
+		return render_template('test.html', data=t)
+		
+		
 
 if __name__ == '__main__':
 	app.run()

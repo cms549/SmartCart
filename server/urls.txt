@@ -15,4 +15,6 @@ What server has to do:
 			checks in form for:
 				idnum
 				keyword
-	
+	4) /location
+		get returns all rfid and locations
+		post returns one rfid's location (x,y)
