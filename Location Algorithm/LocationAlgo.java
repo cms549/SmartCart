@@ -4,10 +4,9 @@ import java.util.HashSet;
 public class LocationAlgo {
 	
 	
-	public static int gH(Coordinate curr, Coordinate goal){
+	public static int gH(Cell curr, Cell goal){
 		int x = Math.abs(goal.x - curr.x);
 		int y = Math.abs(goal.y - curr.y);
-	
 		return x+y;
 	}
 	
@@ -16,9 +15,9 @@ public class LocationAlgo {
 	 * Gives the number of nodes expanded
 	 */
 	HashSet<Cell> closed;
-	Map m;
+	Cell[][] m;
 	
-	public LocationAlgo(Map m){
+	public LocationAlgo(Cell[][] m){
 		this.m=m;
 		fringe = new Heap(0);
 		closed = new HashSet<Cell>();
@@ -36,34 +35,35 @@ public class LocationAlgo {
 		
 		//left
 		x--;
-		if(x>=0){
-			if(c.getDistance(m.board[x][y])!=null){coord.add(m.board[x][y]);}
+		if(x>=0 && m[x][y].isNotBlocked()){
+			coord.add(m[x][y]);
 		}
 		y--;x++;
 		//up
-		if(y>=0){if(c.getDistance(m.board[x][y])!=null){coord.add(m.board[x][y]);}}
+		if(y>=0&& m[x][y].isNotBlocked()){
+			coord.add(m[x][y]);}
 		x++;
 		//right
 		y++;
-		if(x<160){if(c.getDistance(m.board[x][y])!=null){coord.add(m.board[x][y]);}}
+		if(x<m.length&& m[x][y].isNotBlocked()){
+			coord.add(m[x][y]);}
 		y++;
 		//down
 		x--;
-		if(y<120 ){if(c.getDistance(m.board[x][y])!=null){coord.add(m.board[x][y]);}}
+		if(y<m[0].length && m[x][y].isNotBlocked()){coord.add(m[x][y]);}
 		return coord;
 	}
 	
 	
 	
 	
-	private void mainPart() {
-		m.sStart.g.m=0;
-		m.sStart.g.n=0;
-		fringe.insert(m.sStart);
-		m.sStart.parent = m.sStart;
+	private void mainPart(Cell start, Cell goal) {
+		start.g=0;
+		fringe.insert(start);
+		start.parent = start;
 		while(!fringe.isEmpty()){
 			Cell s = fringe.pop();
-			if(s.equals(m.sGoal)){
+			if(s.equals(goal)){
 				return;
 			}
 			closed.add(s);
@@ -72,8 +72,7 @@ public class LocationAlgo {
 				Cell sprime = neighbors.get(i);
 				if(!closed.contains(sprime)){
 					if(sprime.index==-1){
-						sprime.g.m=100000;
-						sprime.g.n=100000;
+						sprime.g=100000;
 						sprime.parent=null;
 					}
 					updateVertex(s,sprime);
@@ -84,10 +83,9 @@ public class LocationAlgo {
 	}
 
 	private void updateVertex(Cell s, Cell sprime) {
-		Root2Number gs = s.g.add(s.getDistance(sprime));
-		if(gs.compareTo(sprime.g)<0){
-			sprime.g.m = gs.m;
-			sprime.g.n = gs.n;
+		double gs = s.g+1;
+		if(gs<sprime.g){
+			sprime.g = gs;
 			sprime.parent=s;
 		
 			if(sprime.index!=-1){
@@ -102,18 +100,17 @@ public class LocationAlgo {
 	/**
 	 * Fills out Astarpath in map
 	 */
-	public void AStar(){
+	public ArrayList<Cell> AStar(Cell start, Cell goal){
 		closed.clear();
 		fringe.clear();
-		mainPart();
-		Cell pointer=m.sGoal;
-		m.AStartpath.clear();
-		while(!pointer.equals(m.sStart)){
-			m.AStartpath.add(new Coordinate(pointer.x,pointer.y));
+		mainPart(start, goal);
+		Cell pointer=goal;
+		ArrayList<Cell> ans = new ArrayList<Cell>();
+		while(!pointer.equals(start)){
+			ans.add(pointer);
 			pointer=pointer.parent;
 		}
-		//f = g+1*h
-		return;
+		return ans;
 	}
 	
 	
