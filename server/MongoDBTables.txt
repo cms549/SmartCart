@@ -1,0 +1,33 @@
+TABLE 1: 
+	types: -> only has one column(name column)
+		One entry:
+		"name" : "fruit"
+		
+		Next entry:
+		"name" : "vegie"
+		
+TABLE 2: 
+	items: -> Note don't include $ in price
+		one entry:
+		"name" : "Green Apple",
+		"desc" : "Granny Smith Apple",
+		"price" : "1.55",
+		"barcode" : "12",
+		"type" : "fruit",
+		"rfid": "189" //LOCATION
+		
+		
+Table 3:
+	Location: gives us location for the specified rfid	
+		one entry:
+		"rfid": "189"
+		"x": "10"
+		"y": "5"
+		
+		
+	
+		
+
+
+
+

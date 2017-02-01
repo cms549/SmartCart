@@ -6,7 +6,7 @@ run mongod
 mongo.exe is shell to do some finds and adds
 ADD TO TOPICS
 >use test
->db.topics.insert(
+>db.types.insert(
    {
       "name" : "fruit"
    }
@@ -16,10 +16,11 @@ ADD TO ITEMS
 >db.items.insert(
    {
       "name" : "Green Apple",
-	  "desc" : "Granny Smith Apple",
-	  "price" : "1.55",
-	  "rfid" : "12",
-	  "type" : "fruit"
+		"desc" : "Granny Smith Apple",
+		"price" : "1.55",
+		"barcode" : "12",
+		"type" : "fruit",
+		"rfid": "189" 
    }
 )
 

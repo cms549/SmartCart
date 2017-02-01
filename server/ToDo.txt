@@ -1,0 +1,4 @@
+Parsing data on the phone -> see how volley works with recieving response from server.
+Map inputting a char array -> to gui
+Test if bluetooth works
+Test if barcode works (make sure it reads)

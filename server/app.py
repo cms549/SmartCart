@@ -38,18 +38,18 @@ def leave():
 		
 
 		
-@app.route('/topics', methods=['GET', 'POST'])
-def topics():
+@app.route('/types', methods=['GET', 'POST'])
+def types():
 	if request.method == "POST":
-		topic = request.form['topic']
+		type = request.form['type']
 		#search for specific topic
-		ans = db.topics.find_one_or_404({'topic': topic})
+		ans = db.types.find_one_or_404({'type': type})
 		return render_template('test.html', data=ans)
-	#grab the list of topics from the database
-	topics = db.topics.find()
+	#grab the list of types from the database
+	types = db.types.find()
 	t=[]
-	for r in range(0, topics.count()):
-		t.append( topics.next().get("name"))
+	for r in range(0, types.count()):
+		t.append( type.next().get("name"))
 	return render_template('test.html', data=t)
 	
 	
@@ -78,10 +78,10 @@ def items():
 @app.route('/location', methods=['GET', 'POST'])
 def location():
 	if request.method == "POST":
-		idnum = int(request.form['idnum'])
+		idnum = int(request.form['rfid'])
 		if idnum != -1:
 			#search for specific number
-			ans = db.location.find({'_id': idnum})
+			ans = db.location.find({'rfid': idnum})
 			return render_template('test.html', data=ans)
 	#grab the rfid locaitons from the database
 		its = db.location.find().toArray()
