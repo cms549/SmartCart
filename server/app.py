@@ -9,7 +9,7 @@ connect_string = "mongodb://"+ mongo_server+ ":"+ mongo_port
 
 app = Flask(__name__)
 connection = MongoClient(connect_string)    
-db = connection.test
+db = connection.local
 
 
 
@@ -18,14 +18,14 @@ occ = 0
 @app.route('/occupancy', methods=['GET', 'POST'])
 def occupancy():
 	#grab the occupancy from the database
-	occupancy = ""+occ
+	occupancy = "",occ
 	if request.method == 'GET':
 		return render_template('test.html', data=occupancy)
 	if request.method == "POST":
 		global occ
 		#update the occupancy from the database 
 		occ= occ+1
-		occupancy = ""+occ
+		occupancy = "",occ
 		return render_template('test.html', data=occupancy)
 
 @app.route('/leave', methods=['GET', 'POST'])
@@ -33,7 +33,7 @@ def leave():
 	global occ
 	#update the occupancy from the database 
 	occ= occ-1
-	occupancy = ""+occ
+	occupancy = "",occ
 	return render_template('test.html', data=occupancy)
 		
 
@@ -49,7 +49,9 @@ def types():
 	types = db.types.find()
 	t=[]
 	for r in range(0, types.count()):
-		t.append( type.next().get("name"))
+		k= types.next()
+		nameOfItem = k.get("name")
+		t.append( nameOfItem)
 	return render_template('test.html', data=t)
 	
 	
