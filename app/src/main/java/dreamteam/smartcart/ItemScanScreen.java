@@ -36,7 +36,7 @@ import java.util.Date;
 /**
  * Item scanning screen -> needs to use sql to look at what item it is
  */
-public class ItemScanScreen extends AppCompatActivity {
+public class  ItemScanScreen extends AppCompatActivity {
 
     private Button scanButton;
     private ImageView scannedImage;
@@ -131,11 +131,16 @@ public class ItemScanScreen extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
-                // scannedImage.setImageURI(file);
-                Bitmap myBitmap= BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.barcode);
-                scannedImage.setImageBitmap(myBitmap);
+                 scannedImage.setImageURI(file);
+               Bitmap myBitmap= BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.barcode2);
+               // scannedImage.setImageBitmap(myBitmap);
+                if(scannedImage.getDrawable()==null){
+                    Toast.makeText(this, "scanned drawable is null", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+               // Bitmap myBitmap=((BitmapDrawable)scannedImage.getDrawable()).getBitmap();
 
-                //Bitmap myBitmap=((BitmapDrawable)scannedImage.getDrawable()).getBitmap();
+                 scannedImage.setImageBitmap(myBitmap);
                 detectBarcode(myBitmap);
             }
         }
@@ -149,15 +154,26 @@ public class ItemScanScreen extends AppCompatActivity {
         }
 
         Frame frame=new Frame.Builder().setBitmap(bitmap).build();
+
         SparseArray<Barcode> barcodes=detector.detect(frame);
         if (barcodes==null){
             barcode_txt.setText("Invalid barcode");
             return;
         }
         else{
+            if (barcodes==null){
+                System.out.println("barcodes is null");
+            }
             // barcode_txt.setText("No Barcode Detected");
-            Barcode thisCode=barcodes.valueAt(0);
-            barcode_txt.setText(thisCode.rawValue);
+            if (barcodes.size()>0) {
+                Barcode thisCode = barcodes.valueAt(0);
+                barcode_txt.setText(thisCode.rawValue);
+            }
+            else{
+                System.out.println("barcodes is null");
+                barcode_txt.setText("barcodes is null");
+                return;
+            }
         }
 
 

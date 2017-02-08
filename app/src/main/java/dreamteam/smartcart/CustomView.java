@@ -30,7 +30,7 @@ import static android.R.attr.right;
 public class CustomView extends View {
     HashMap<Integer, Integer> xVals;
     HashMap<Integer, Integer> yVals;
-    HashMap<Point,Moves> pointMovesHashMap;
+
     private int radius=30;
     int h,w;
 
@@ -48,7 +48,7 @@ public class CustomView extends View {
         xVals=new HashMap<>();
         yVals=new HashMap<>();
 
-        pointMovesHashMap=new HashMap<>();
+
         DisplayMetrics metrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
