@@ -89,7 +89,7 @@ public class ItemListScreen extends AppCompatActivity {
     private void sendRequestAll() {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://www.google.com";
+        String url ="http://127.0.0.1:5000/topics";
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
