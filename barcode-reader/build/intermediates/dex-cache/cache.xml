@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.0/jars/libs/internal_impl-24.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="032a4b53def5e2ceedfc2e793b126c0163cfa1dd">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.0_f90fd56a0c500c86d5ca14025c573b274f7eb836/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="45f5eda279825ff470e3f51019d374d1ef61e000">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-24.2.0_714d59cc52ac37f44f4cc79763ce92303e25b83d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="c84e216d9bf618464d6b9564d71d9a656433e7c4">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-ui-24.2.0_8c79b3d1781ae6e86e39913b7b30aedc27b1a284/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="c755536e5a100d9c76c8ea0b72f76c018f7a9de2">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-24.2.0_d27b37fc67793ba294d101f7286930718b019d4d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="109e49b222de9ede984bda09696830504d73081c">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_0de2ad3a1261b0fdce94c9c455703fe43b9286b8/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="f3ee23ef25c9a8fe3d40246d0b7097267963a612">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-24.2.0_62ca0248a9d08aecbd7937c786d0ea3f29205579/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/jars/libs/internal_impl-24.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="771b3cc0e597b54da25f8086ba73180c59c6bc71">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.0_b933e58b4b39ff9567cc8be09f937f2693860aad/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.0/jars/libs/internal_impl-24.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="60d7b23621d31e6f42f4f76f16af467e57a20cda">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.0_8ce6e196819e7c2d81b9e1e04efbbcbc639b4371/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="d8bd2268fdcbfd52c76ade65d9900cd8def93a44">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-24.2.0_3155528657fe4cb7bca5e9c93677e5864f22dc82/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="beac40bcc8a320a896dd15f5109cfcaea5e1e0e3">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-24.2.0_4b6c808a0af0531ec3667e03ae1ead75049cf125/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/9.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="8a36d229011e75f0caef408e1adf0d3fd4d94e02">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tasks-9.4.0_37c7cef822b0e611fba60d01ce2e803ea0e3beea/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="f9b41622897665678d31d78e57a361cb0cebcb0d">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-compat-24.2.0_4e8de56f1cdaa9e8a4429ff026b49a21281d0e08/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/24.2.0/support-annotations-24.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="6be858a75633b1f0a2d24cad740db57775cb6871">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-24.2.0_acd02eb87c6213841244fe76e9580f93a1e64a9a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.android.support/design/24.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="23eb0d2998a782213b56168cbf23a0688b9111d9">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-24.2.0_428fcc09a611550334d57dd3357ec2e68c09654c/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.0/jars/libs/internal_impl-24.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="045be695d968dd707691cc55d23746dbf8cf569a">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.0_748cb895cfee0c976242b19f9c8c5c9bb62651c7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="c3c638be6e650b165ab9ae144857b64e82787fad">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-24.2.0_02c917cfb2af1d7c4119d1947e4b0b777cc52706/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="618485fef3ebe12127f7622abbc9b5b39057b5c2">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-9.4.0_c3208d225b75c9123349a50489eb90b2b5eedd37/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="62df8e496605275a2acfe4c88a16117a464307b6">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_8b15aacfe9a8eb698921ae1c2f631167912e9f04/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="fcc945a86ebcbf527429acb8216ec7dae2c06417">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-24.2.0_b6a54afafc1a0acad040b7c426c7481b3eb83a52/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.0/jars/libs/internal_impl-24.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="6e02e34594ebe9c0501ffda8dd48497f81b82977">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.0_40ec335e9ab02a02d255f0aa83fb5a186e0bf95b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="6eb9107eb34d2fe2b020662b7fbbec991dcba846">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-media-compat-24.2.0_27b659d2b090e0e448b544faf558edb426cead19/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-vision/9.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="670df81539ab71918d49b186598b7eff08ef6563">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-vision-9.4.0_61826e929c4549e09b96ed54954d1c081bfeb7dc/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/9.4.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.1"
+        sha1="3dee4ce5844d39d843d503fb8fe04e51e5bfffac">
+        <dex dex="/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-base-9.4.0_71303624969cb11b9b862d3db38341737ce301d0/classes.dex" />
+    </item>
+
+</items>
