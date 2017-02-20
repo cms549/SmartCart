@@ -1,7 +1,0 @@
-#Tue Feb 14 15:08:52 EST 2017
-base.0=/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_8b15aacfe9a8eb698921ae1c2f631167912e9f04
-renamed.1=classes.dex
-renamed.0=classes2.dex
-file.1=/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_0de2ad3a1261b0fdce94c9c455703fe43b9286b8/classes.dex
-base.1=/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_0de2ad3a1261b0fdce94c9c455703fe43b9286b8
-file.0=/Users/AthiraHaridas/Desktop/android-vision/visionSamples/barcode-reader/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_8b15aacfe9a8eb698921ae1c2f631167912e9f04/classes.dex

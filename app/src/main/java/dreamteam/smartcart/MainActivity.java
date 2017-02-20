@@ -18,6 +18,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import dreamteam.smartcart.barcode.BarcodeCaptureActivity;
+import dreamteam.smartcart.barcode.BarcodeMainActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     /**
@@ -173,6 +176,12 @@ public class MainActivity extends AppCompatActivity {
      */
     public void goToShoppingList(View view) {
         Intent nextScreen = new Intent(getApplicationContext(), MyShoppingListScreen.class);
+        //start next screen
+        startActivity(nextScreen);
+    }
+
+    public void goToBarcode(View view){
+        Intent nextScreen = new Intent(getApplicationContext(),BarcodeMainActivity.class);
         //start next screen
         startActivity(nextScreen);
     }
