@@ -180,11 +180,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(nextScreen);
     }
 
-    public void goToBarcode(View view){
-        Intent nextScreen = new Intent(getApplicationContext(),BarcodeMainActivity.class);
-        //start next screen
-        startActivity(nextScreen);
-    }
 
 
 
