@@ -41,6 +41,11 @@ public class BarcodeMainActivity extends Activity implements View.OnClickListene
     private CompoundButton useFlash;
     private TextView statusMessage;
     private TextView barcodeValue;
+    private TextView itemName;
+    private TextView price;
+
+    String barcodeVal;
+
 
     private static final int RC_BARCODE_CAPTURE = 9001;
     private static final String TAG = "BarcodeMain";
@@ -52,6 +57,9 @@ public class BarcodeMainActivity extends Activity implements View.OnClickListene
 
         statusMessage = (TextView)findViewById(R.id.status_message);
         barcodeValue = (TextView)findViewById(R.id.barcode_value);
+
+        itemName= (TextView) findViewById(R.id.item_name);
+        price=(TextView) findViewById(R.id.price);
 
         autoFocus = (CompoundButton) findViewById(R.id.auto_focus);
         useFlash = (CompoundButton) findViewById(R.id.use_flash);
@@ -69,7 +77,7 @@ public class BarcodeMainActivity extends Activity implements View.OnClickListene
         if (v.getId() == R.id.read_barcode) {
             // launch barcode activity.
             Intent intent = new Intent(this, BarcodeCaptureActivity.class);
-            intent.putExtra(BarcodeCaptureActivity.AutoFocus, autoFocus.isChecked());
+            intent.putExtra(BarcodeCaptureActivity.AutoFocus, true );//autoFocus.isChecked());
             intent.putExtra(BarcodeCaptureActivity.UseFlash, useFlash.isChecked());
 
             startActivityForResult(intent, RC_BARCODE_CAPTURE);
@@ -107,9 +115,13 @@ public class BarcodeMainActivity extends Activity implements View.OnClickListene
                     Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
                     statusMessage.setText(R.string.barcode_success);
                     barcodeValue.setText(barcode.displayValue);
+                    barcodeVal=barcode.displayValue;
+                    getInfo(barcodeVal);
                     Log.d(TAG, "Barcode read: " + barcode.displayValue);
                 } else {
                     statusMessage.setText(R.string.barcode_failure);
+                    itemName.setText("No Item Found");
+                    price.setText("$0.00");
                     Log.d(TAG, "No barcode captured, intent data is null");
                 }
             } else {
@@ -121,4 +133,30 @@ public class BarcodeMainActivity extends Activity implements View.OnClickListene
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+    public void getInfo(String barcode){
+        if (barcode.equals("9310779300005")){
+            itemName.setText("Apple");
+            price.setText("$1.29");
+        }
+        else if (barcode.equals("5012345678900")){
+            itemName.setText("Ramen Noodles");
+            price.setText("$0.50");
+        }
+        else if (barcode.equals("036000291452")){
+            itemName.setText("Paper Towels");
+            price.setText("$10.49");
+        }
+        else if (barcode.equals("234567899992")){
+            itemName.setText("Pasta");
+            price.setText("$2.99");
+        }
+        else if (barcode.equals("671860013624")){
+            itemName.setText("Tacos");
+            price.setText("$1.00");
+        }
+    }
+
+
+
 }
