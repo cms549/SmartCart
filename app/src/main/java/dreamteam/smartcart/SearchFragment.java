@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import java.io.Serializable;
 
+import dreamteam.smartcart.barcode.BarcodeMainActivity;
+
 public class SearchFragment extends Fragment implements Serializable{
 
     /**
@@ -33,7 +35,7 @@ public class SearchFragment extends Fragment implements Serializable{
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent nextScreen = new Intent(getActivity(), ItemScanScreen.class);
+                        Intent nextScreen = new Intent(getActivity(), BarcodeMainActivity.class);
                         //start next screen
                         startActivity(nextScreen);
                     }
