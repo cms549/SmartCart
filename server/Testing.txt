@@ -1,0 +1,29 @@
+Tested:
+	Occupancy get and post works
+	leave works
+	types works 
+		[u'fruit', u'vegetable', u'dairy', u'bakery', u'meat']
+	type ->>>> type = request.form['type'] -> returns name$price$barcode with commas in between
+		[u'Green Apple$1.55$12', u'Gala Apple$1.65$5']
+	items
+	find by barcode
+		request.form['barcode']
+	get will get all the items
+	
+	itemsearch
+		find by name 
+		request.form['keyword'] 
+		->to do: capable of searching for keywords not to match the whole name
+		
+	Location
+	get
+		[u'189$10$5']'
+		
+	post
+	idnum = request.form['rfid']
+	
+		
+	
+		
+		
+	

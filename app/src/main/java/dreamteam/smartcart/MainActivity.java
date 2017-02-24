@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void setOccupancyField() {
         //check if you have internet access
-        if(isOnline()) {
+            if(isOnline()) {
             sendARequest();
         }
         else{
@@ -111,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         //String url ="http://www.google.com";
         String url ="http://127.0.0.1:5000/occupancy";
+        System.out.println("SENDING REEQUEST");
+
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -123,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+
+                        System.out.println("ERROR WITH RESPONSE"+ error.toString());
                         tvocc.setText("N/A");
                     }
         });
@@ -139,9 +143,10 @@ public class MainActivity extends AppCompatActivity {
         ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
                 connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-
+            System.out.println("ONLINE");
             return true;
         }
+        System.out.println("NOT ONLINE");
         return false;
     }
 
