@@ -8,19 +8,25 @@ Tested:
 	items
 	find by barcode
 		request.form['barcode']
+			{u'barcode': u'5', u'name': u'Gala Apple', u'price': u'1.65', u'rfid': u'189', u'_id': ObjectId('588a048f86d9cc1e43668da3'), u'type': u'fruit', u'desc': u'Gala Apple'}
+		
 	get will get all the items
+		[u'Green Apple$1.55$12', u'Gala Apple$1.65$5']
 	
 	itemsearch
 		find by name 
 		request.form['keyword'] 
+			{u'barcode': u'5', u'name': u'Gala Apple', u'price': u'1.65', u'rfid': u'189', u'_id': ObjectId('588a048f86d9cc1e43668da3'), u'type': u'fruit', u'desc': u'Gala Apple'}
 		->to do: capable of searching for keywords not to match the whole name
 		
 	Location
 	get
-		[u'189$10$5']'
+		[u'189$10$5', u'150$15$51']
+		
 		
 	post
 	idnum = request.form['rfid']
+		{u'y': u'5', u'x': u'10', u'_id': ObjectId('58b052ab115bb8a900dc3cab'), u'rfid': u'189'}
 	
 		
 	
