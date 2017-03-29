@@ -30,9 +30,16 @@ public class MyCartScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_cart);
 
+
+
         balance=0;
         //set up search bar
         Intent intent = getIntent();
+        String itemName=intent.getStringExtra("ItemName");
+        System.out.println(itemName);
+        Double price=intent.getDoubleExtra("price",0.0);
+        int quant=intent.getIntExtra("quant",0);
+
         searchfrag = (SearchFragment) intent.getSerializableExtra("searchfrag");
         if(searchfrag==null){
             searchfrag = new SearchFragment();
@@ -42,7 +49,8 @@ public class MyCartScreen extends AppCompatActivity {
         tvbal = (TextView) findViewById(R.id.tvbal);
 
         itemsList = new ArrayList<Item>();
-        loadFromSP();
+
+        //loadFromSP();
 
 
         lvCart = (ListView) findViewById(R.id.lvSearch);
@@ -73,6 +81,10 @@ public class MyCartScreen extends AppCompatActivity {
             }
         });
 
+        itemsList.add(new Item(itemName,quant,price));
+        ad.notifyDataSetChanged();
+        balance=balance+quant*price;
+        tvbal.setText("Total: $"+balance);
 
 
     }
@@ -129,12 +141,4 @@ public class MyCartScreen extends AppCompatActivity {
 
     }
 
-
-
-
-
-
-    public void back(View view) {
-        finish();
-    }
 }

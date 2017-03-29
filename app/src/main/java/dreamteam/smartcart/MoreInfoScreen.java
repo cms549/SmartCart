@@ -50,6 +50,36 @@ public class MoreInfoScreen extends AppCompatActivity {
         etAmt = (EditText) findViewById(R.id.etAmt);
 
 
+        Intent intent=getIntent();
+        String barcode=intent.getStringExtra("barcode");
+
+        if (barcode.equals("9310779300005")){
+            tvName.setText("Apple");
+            tvPrice.setText("$1.29");
+        }
+        else if (barcode.equals("5012345678900")){
+            tvName.setText("Ramen Noodles");
+            tvPrice.setText("$0.50");
+        }
+        else if (barcode.equals("036000291452")){
+            tvName.setText("Paper Towels");
+            tvPrice.setText("$10.49");
+        }
+        else if (barcode.equals("234567899992")){
+            tvName.setText("Pasta");
+            tvPrice.setText("$2.99");
+        }
+        else if (barcode.equals("671860013624")){
+            tvName.setText("Tacos");
+            tvPrice.setText("$1.00");
+        }
+        else {
+            tvName.setText("TEST");
+            tvPrice.setText("$10.99");
+        }
+
+
+        /*
         //Grab the input
         Intent intent = getIntent();
         String id = (String) intent.getSerializableExtra("itemID");
@@ -60,6 +90,7 @@ public class MoreInfoScreen extends AppCompatActivity {
             tvName.setText("Cannot connect to server.");
         }
 
+           */
     }
 
 
@@ -121,6 +152,10 @@ public class MoreInfoScreen extends AppCompatActivity {
     public void addToCart(View view) {
         //Grab amount
         String samt = etAmt.getText().toString();
+        if (samt.equals("")){
+            Toast.makeText(this,"Error: Must enter a number to add to cart",Toast.LENGTH_LONG).show();
+            return;
+        }
         int quant = Integer.parseInt(samt);
         if(quant==-1){
             Toast.makeText(this, "Error: Must Specify Positive Number to Add to Cart", Toast.LENGTH_LONG).show();
@@ -128,6 +163,9 @@ public class MoreInfoScreen extends AppCompatActivity {
         }
         //Add to cart
 
+        //Intent intent=new Intent(getApplicationContext(),MyCartScreen.class);
+        //startActivity(intent);
+/*
         //Update shared pref - balance and list
         Gson gson = new Gson();
         // Look at preferences
@@ -143,9 +181,22 @@ public class MoreInfoScreen extends AppCompatActivity {
         Item c = new Item(name,quant,price);
         String json = gson.toJson(c);
         itemsAsJSON.add(json);
+
         editor.putStringSet("itemsList", (Set<String>) itemsAsJSON);
         editor.putString("cartbalance", ""+balance);
-        editor.commit();
+        editor.apply();
+     */
+        ///////////////////////////////Test////////////
+        Intent intent=new Intent(getApplicationContext(),MyCartScreen.class);
+        intent.putExtra("ItemName",tvName.getText());
+        Double price=Double.parseDouble(tvPrice.getText().subSequence(1,tvPrice.getText().length()).toString());
+        System.out.println(price);
+        intent.putExtra("price",price);
+        intent.putExtra("quant",quant);
+        //System.out.println(price);
+        startActivity(intent);
+
+
 
 
     }

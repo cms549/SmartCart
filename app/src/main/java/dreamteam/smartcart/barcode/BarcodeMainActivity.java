@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
+import dreamteam.smartcart.MoreInfoScreen;
 import dreamteam.smartcart.R;
 
 
@@ -42,6 +43,11 @@ public class BarcodeMainActivity extends Activity implements View.OnClickListene
     private TextView statusMessage;
     private TextView barcodeValue;
 
+
+
+    String barcodeVal;
+
+
     private static final int RC_BARCODE_CAPTURE = 9001;
     private static final String TAG = "BarcodeMain";
 
@@ -52,6 +58,7 @@ public class BarcodeMainActivity extends Activity implements View.OnClickListene
 
         statusMessage = (TextView)findViewById(R.id.status_message);
         barcodeValue = (TextView)findViewById(R.id.barcode_value);
+
 
         autoFocus = (CompoundButton) findViewById(R.id.auto_focus);
         useFlash = (CompoundButton) findViewById(R.id.use_flash);
@@ -69,7 +76,7 @@ public class BarcodeMainActivity extends Activity implements View.OnClickListene
         if (v.getId() == R.id.read_barcode) {
             // launch barcode activity.
             Intent intent = new Intent(this, BarcodeCaptureActivity.class);
-            intent.putExtra(BarcodeCaptureActivity.AutoFocus, autoFocus.isChecked());
+            intent.putExtra(BarcodeCaptureActivity.AutoFocus, true );//autoFocus.isChecked());
             intent.putExtra(BarcodeCaptureActivity.UseFlash, useFlash.isChecked());
 
             startActivityForResult(intent, RC_BARCODE_CAPTURE);
@@ -107,9 +114,14 @@ public class BarcodeMainActivity extends Activity implements View.OnClickListene
                     Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
                     statusMessage.setText(R.string.barcode_success);
                     barcodeValue.setText(barcode.displayValue);
+                    barcodeVal=barcode.displayValue;
+                    getInfo(barcodeVal);
                     Log.d(TAG, "Barcode read: " + barcode.displayValue);
                 } else {
                     statusMessage.setText(R.string.barcode_failure);
+                    ////////////////////TEST////////////////////////////////////////////////////
+                    getInfo("0000");
+                    ///////////////////TEST////////////////////////////////////////////////////
                     Log.d(TAG, "No barcode captured, intent data is null");
                 }
             } else {
@@ -121,4 +133,19 @@ public class BarcodeMainActivity extends Activity implements View.OnClickListene
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+    public void getInfo(String barcode){
+        // go to More Info Screen
+
+        Intent intent=new Intent(getApplicationContext(), MoreInfoScreen.class);
+        intent.putExtra("barcode",barcode);
+        startActivity(intent);
+
+
+
+
+    }
+
+
+
 }

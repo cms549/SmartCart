@@ -46,7 +46,7 @@ public class MyCartAdapter extends ArrayAdapter<Item> {
                 }
 
                 if (rowq != null) {
-                    rowq.setText(t.quant);
+                    rowq.setText(String.valueOf(t.quant));
                 }
                 if (rowp != null) {
                     rowp.setText("$"+t.price);
