@@ -2,7 +2,10 @@ package dreamteam.smartcart;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +16,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -50,13 +54,31 @@ public class SyncCartScreen extends AppCompatActivity {
             startActivityForResult(turnOn, 0);
             Toast.makeText(getApplicationContext(), "Turned on BT",Toast.LENGTH_LONG).show();
         }
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        filter.addAction(BluetoothDevice.ACTION_FOUND);
+        this.registerReceiver(mReceiver, filter);
+
         BA.startDiscovery();
-        pairedDevices = BA.getBondedDevices();
+
+
+        //pairedDevices = BA.getBondedDevices();
+        pairedDevices = new HashSet<BluetoothDevice>();
         list = new ArrayList<String>();
 
-        for(BluetoothDevice bt : pairedDevices) list.add(bt.getName());
-        Toast.makeText(getApplicationContext(), "Showing Paired Devices",Toast.LENGTH_SHORT).show();
 
+
+        /*
+        for(BluetoothDevice bt : pairedDevices) {
+
+
+            list.add(bt.getName());
+
+        }
+        Toast.makeText(getApplicationContext(), "Showing Paired Devices",Toast.LENGTH_SHORT).show();
+    */
         final ArrayAdapter adapter = new  ArrayAdapter(this,android.R.layout.simple_list_item_1, list);
 
         lvSC.setAdapter(adapter);
@@ -81,6 +103,7 @@ public class SyncCartScreen extends AppCompatActivity {
 
 
 
+
     }
 
 
@@ -98,4 +121,41 @@ public class SyncCartScreen extends AppCompatActivity {
 
     }
 
+
+    //The BroadcastReceiver that listens for bluetooth broadcasts
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //Toast.makeText(context, "recieved something ", Toast.LENGTH_LONG).show();
+            String action = intent.getAction();
+
+            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                Toast.makeText(context, "FOUND BLUETOOTH DEVICE", Toast.LENGTH_LONG).show();
+                //Device found
+                pairedDevices.add(device);
+                list.add(device.getName());
+                lvSC.invalidateViews();
+
+            }
+            else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+                Toast.makeText(context, "Fini ", Toast.LENGTH_LONG).show();
+
+
+            }
+            else if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
+                Toast.makeText(context, "Commence ", Toast.LENGTH_LONG).show();
+
+
+            }
+
+
+        }
+    };
+
 }
+
+
+
+

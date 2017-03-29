@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
 
+import dreamteam.smartcart.MoreInfoScreen;
 import dreamteam.smartcart.R;
 
 
@@ -41,8 +42,8 @@ public class BarcodeMainActivity extends Activity implements View.OnClickListene
     private CompoundButton useFlash;
     private TextView statusMessage;
     private TextView barcodeValue;
-    private TextView itemName;
-    private TextView price;
+
+
 
     String barcodeVal;
 
@@ -58,8 +59,6 @@ public class BarcodeMainActivity extends Activity implements View.OnClickListene
         statusMessage = (TextView)findViewById(R.id.status_message);
         barcodeValue = (TextView)findViewById(R.id.barcode_value);
 
-        itemName= (TextView) findViewById(R.id.item_name);
-        price=(TextView) findViewById(R.id.price);
 
         autoFocus = (CompoundButton) findViewById(R.id.auto_focus);
         useFlash = (CompoundButton) findViewById(R.id.use_flash);
@@ -120,8 +119,9 @@ public class BarcodeMainActivity extends Activity implements View.OnClickListene
                     Log.d(TAG, "Barcode read: " + barcode.displayValue);
                 } else {
                     statusMessage.setText(R.string.barcode_failure);
-                    itemName.setText("No Item Found");
-                    price.setText("$0.00");
+                    ////////////////////TEST////////////////////////////////////////////////////
+                    getInfo("0000");
+                    ///////////////////TEST////////////////////////////////////////////////////
                     Log.d(TAG, "No barcode captured, intent data is null");
                 }
             } else {
@@ -135,26 +135,15 @@ public class BarcodeMainActivity extends Activity implements View.OnClickListene
     }
 
     public void getInfo(String barcode){
-        if (barcode.equals("9310779300005")){
-            itemName.setText("Apple");
-            price.setText("$1.29");
-        }
-        else if (barcode.equals("5012345678900")){
-            itemName.setText("Ramen Noodles");
-            price.setText("$0.50");
-        }
-        else if (barcode.equals("036000291452")){
-            itemName.setText("Paper Towels");
-            price.setText("$10.49");
-        }
-        else if (barcode.equals("234567899992")){
-            itemName.setText("Pasta");
-            price.setText("$2.99");
-        }
-        else if (barcode.equals("671860013624")){
-            itemName.setText("Tacos");
-            price.setText("$1.00");
-        }
+        // go to More Info Screen
+
+        Intent intent=new Intent(getApplicationContext(), MoreInfoScreen.class);
+        intent.putExtra("barcode",barcode);
+        startActivity(intent);
+
+
+
+
     }
 
 

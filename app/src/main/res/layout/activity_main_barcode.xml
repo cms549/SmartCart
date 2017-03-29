@@ -71,23 +71,4 @@
         android:layout_below="@+id/status_message"
         android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:text="Item Name"
-        android:layout_width="wrap_content"
-        android:textSize="20dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/barcode_value"
-        android:layout_alignStart="@+id/status_message"
-        android:id="@+id/item_name" />
-
-    <TextView
-        android:text="Price"
-        android:layout_width="wrap_content"
-        android:textSize="20dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/barcode_value"
-        android:layout_toEndOf="@+id/barcode_value"
-        android:id="@+id/price"
-        android:layout_alignStart="@+id/use_flash" />
-
 </RelativeLayout>
