@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.fragsearch, searchfrag).commit();
 
 
-
+        incrementOccupancy();
         setOccupancyField();
         setMyCartBalance();
     }
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
     private void setOccupancyField() {
         //check if you have internet access
             if(isOnline()) {
-            sendARequest();
+                sendAGetRequest();
         }
         else{
             tvocc.setText("N/A");
@@ -109,12 +109,11 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Sends server a request for occupancy
      */
-    private void sendARequest() {
+    private void sendAGetRequest() {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         //String url ="http://www.google.com";
-        String url ="http://127.0.0.1:5000/occupancy";
-        System.out.println("SENDING REEQUEST");
+        String url ="https://fast-plateau-72318.herokuapp.com/occupancy";
 
 
         // Request a string response from the provided URL.
@@ -123,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
                         //String s = "Response is: "+ response.substring(0,500);
-                        tvocc.setText(response.substring(0,10).trim());
+                        tvocc.setText(response.trim());
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -132,6 +131,63 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println("ERROR WITH RESPONSE"+ error.toString());
                         tvocc.setText("N/A");
                     }
+        });
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
+
+
+    /**
+     * Sends server a request for occupancy
+     */
+    private void incrementOccupancy() {
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        //String url ="http://www.google.com";
+        String url ="https://fast-plateau-72318.herokuapp.com/occupancy";
+        System.out.println("SENDING REEQUEST");
+
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                tvocc.setText(response.trim());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                System.out.println("ERROR WITH RESPONSE"+ error.toString());
+            }
+        });
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
+
+    /**
+     * Sends server a request for occupancy
+     */
+    private void decrementOccupancy() {
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        //String url ="http://www.google.com";
+        String url ="https://fast-plateau-72318.herokuapp.com/leave";
+        System.out.println("SENDING REEQUEST");
+
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                System.out.println("ERROR WITH RESPONSE"+ error.toString());
+            }
         });
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
@@ -186,6 +242,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        decrementOccupancy();
+    }
 
 }

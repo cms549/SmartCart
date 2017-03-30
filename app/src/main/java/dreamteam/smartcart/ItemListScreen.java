@@ -6,19 +6,32 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 
 /**
@@ -124,15 +137,112 @@ public class ItemListScreen extends AppCompatActivity {
      */
     private void sendRequestType(String type) {
         // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://www.google.com/type/"+type;
+        //RequestQueue queue = Volley.newRequestQueue(this);
+        //String url ="https://fast-plateau-72318.herokuapp.com/types";
+        /////
+        try {
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            String URL = "https://fast-plateau-72318.herokuapp.com/types";
+            JSONObject jsonBody = new JSONObject();
+            jsonBody.put("type", type);
+            final String mRequestBody = jsonBody.toString();
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    System.out.println("Resp="+response);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    // As of f605da3 the following should work
+                    NetworkResponse response = error.networkResponse;
+                    if (error instanceof ServerError && response != null) {
+                        try {
+                            String res = new String(response.data,
+                                    HttpHeaderParser.parseCharset(response.headers, "utf-8"));
+                            // Now you can use any deserializer to make sense of data
+                            JSONObject obj = new JSONObject(res);
+                        } catch (UnsupportedEncodingException e1) {
+                            // Couldn't properly decode data to string
+                            e1.printStackTrace();
+                        } catch (JSONException e2) {
+                            // returned data is not JSONObject?
+                            e2.printStackTrace();
+                        }
+                    }
+                }
+            }) {
+                @Override
+                public String getBodyContentType() {
+                    return "application/json; charset=utf-8";
+                }
+
+                @Override
+                public byte[] getBody() throws AuthFailureError {
+                    try {
+                        return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
+                    } catch (UnsupportedEncodingException uee) {
+                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
+                        return null;
+                    }
+                }
+
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    System.out.println("H="+response.headers);
+                    try {
+                        System.out.println("D="+ this.getBody().toString());
+                    } catch (AuthFailureError authFailureError) {
+                        authFailureError.printStackTrace();
+                    }
+
+                    String responseString = "";
+                    if (response != null) {
+                        System.out.println(response.toString());
+                        try {
+                            try {
+                                responseString =new String(this.getBody(), HttpHeaderParser.parseCharset(response.headers));
+                            } catch (AuthFailureError authFailureError) {
+                                authFailureError.printStackTrace();
+                            }
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                }
+
+            };
+
+            requestQueue.add(stringRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        ////////
+        /*
+        JSONObject jsonBody = new JSONObject();
+        try {
+            jsonBody.put("type", type);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        final String requestBody = jsonBody.toString();
+        System.out.println("Body="+requestBody);
 
         // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                System.out.println("RESP="+response);
                 arr.clear();
-                String[] list = response.split(",");
+                String[] list = response.split("u");
                 if(list==null){
                     return;
                 }
@@ -149,9 +259,36 @@ public class ItemListScreen extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 arr.add("N/A");
             }
-        });
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return requestBody == null ? null : requestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                    return null;
+                }
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                String responseString = "";
+                if (response != null) {
+
+                    responseString = String.valueOf(response.statusCode);
+
+                }
+                return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+            }
+        };
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
+        */
     }
 
     /**

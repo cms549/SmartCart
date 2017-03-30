@@ -104,23 +104,28 @@ public class ItemTypesScreen extends AppCompatActivity {
     private void sendARequest() {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://www.google.com";
-
+        String url ="https://fast-plateau-72318.herokuapp.com/types";
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 gotTypes=true;
                 listOfTypes.clear();
+                response=response.replace("{'name':", ",");
+                response=response.replace("}", "");
+                response=response.replace("u'", "");
+                response=response.replace("'", "");
                 String[] list = response.split(",");
                 if(list==null){
                     return;
                 }
                 for(int i=0; i<list.length; i++){
+                    list[i]=list[i].trim();
                     if(list[i]==""){
                         continue;
                     }
                     listOfTypes.add(list[i]);
+                    lvType.invalidateViews();
                 }
 
             }
