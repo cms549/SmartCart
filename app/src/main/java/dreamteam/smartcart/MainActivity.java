@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        System.out.println("ERROR WITH RESPONSE"+ error.toString());
+                        System.out.println("ERROR WITH RESPONSE on sendGet"+ error.toString());
                         tvocc.setText("N/A");
                     }
         });
@@ -144,12 +144,12 @@ public class MainActivity extends AppCompatActivity {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         //String url ="http://www.google.com";
-        String url ="https://fast-plateau-72318.herokuapp.com/occupancy";
+        String url ="https://fast-plateau-72318.herokuapp.com/incocc";
         System.out.println("SENDING REEQUEST");
 
 
         // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 tvocc.setText(response.trim());
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                System.out.println("ERROR WITH RESPONSE"+ error.toString());
+                System.out.println("ERROR WITH RESPONSE on increment"+ error.toString());
             }
         });
         // Add the request to the RequestQueue.
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         //String url ="http://www.google.com";
-        String url ="https://fast-plateau-72318.herokuapp.com/leave";
+        String url ="https://fast-plateau-72318.herokuapp.com/decocc";
         System.out.println("SENDING REEQUEST");
 
 
@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                System.out.println("ERROR WITH RESPONSE"+ error.toString());
+                System.out.println("ERROR WITH RESPONSE on decrement"+ error.toString());
             }
         });
         // Add the request to the RequestQueue.

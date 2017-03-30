@@ -36,6 +36,7 @@ public class MyCartAdapter extends ArrayAdapter<Item> {
 
             Item t = getItem(position);
 
+
             if (t != null) {
                 TextView rowi = (TextView) v.findViewById(R.id.rowi);
                 TextView rowq = (TextView) v.findViewById(R.id.rowq);

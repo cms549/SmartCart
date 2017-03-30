@@ -42,15 +42,28 @@ public class ItemListScreen extends AppCompatActivity {
     ListView lvSearch;
     ArrayList<String> arr;
     boolean gotResponse;
+    ArrayList<ItemType>typeList;
+    MyListAdapter listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
+
+
+
+
         lvSearch = (ListView) findViewById(R.id.lvSearch);
         arr = new ArrayList<String>();
+        typeList=new ArrayList<ItemType>();
         gotResponse = false;
-        lvSearch.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arr));
+
+        //MyListAdapter
+        listAdapter=new MyListAdapter(this,R.layout.row_itemlist,typeList);
+
+        lvSearch.setAdapter(listAdapter);
+
+       // lvSearch.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arr));
 
         if(!isOnline()){
             arr.add("Must connect to the internet to use this feature");
@@ -102,23 +115,14 @@ public class ItemListScreen extends AppCompatActivity {
     private void sendRequestAll() {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://127.0.0.1:5000/topics";
+        String url ="https://fast-plateau-72318.herokuapp.com/allitems";
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 arr.clear();
-                String[] list = response.split(",");
-                if(list==null){
-                    return;
-                }
-                for(int i=0; i<list.length; i++){
-                    if(list[i]==""){
-                        continue;
-                    }
-                    arr.add(list[i]);
-                }
+
                 gotResponse = true;
 
             }
@@ -135,160 +139,57 @@ public class ItemListScreen extends AppCompatActivity {
     /**
      * Sends server a request for all items in type type
      */
-    private void sendRequestType(String type) {
+    private void sendRequestType(final String type) {
         // Instantiate the RequestQueue.
-        //RequestQueue queue = Volley.newRequestQueue(this);
-        //String url ="https://fast-plateau-72318.herokuapp.com/types";
-        /////
-        try {
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
-            String URL = "https://fast-plateau-72318.herokuapp.com/types";
-            JSONObject jsonBody = new JSONObject();
-            jsonBody.put("type", type);
-            final String mRequestBody = jsonBody.toString();
 
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    System.out.println("Resp="+response);
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                    // As of f605da3 the following should work
-                    NetworkResponse response = error.networkResponse;
-                    if (error instanceof ServerError && response != null) {
-                        try {
-                            String res = new String(response.data,
-                                    HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-                            // Now you can use any deserializer to make sense of data
-                            JSONObject obj = new JSONObject(res);
-                        } catch (UnsupportedEncodingException e1) {
-                            // Couldn't properly decode data to string
-                            e1.printStackTrace();
-                        } catch (JSONException e2) {
-                            // returned data is not JSONObject?
-                            e2.printStackTrace();
-                        }
-                    }
-                }
-            }) {
-                @Override
-                public String getBodyContentType() {
-                    return "application/json; charset=utf-8";
-                }
-
-                @Override
-                public byte[] getBody() throws AuthFailureError {
-                    try {
-                        return mRequestBody == null ? null : mRequestBody.getBytes("utf-8");
-                    } catch (UnsupportedEncodingException uee) {
-                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", mRequestBody, "utf-8");
-                        return null;
-                    }
-                }
-
-                @Override
-                protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                    System.out.println("H="+response.headers);
-                    try {
-                        System.out.println("D="+ this.getBody().toString());
-                    } catch (AuthFailureError authFailureError) {
-                        authFailureError.printStackTrace();
-                    }
-
-                    String responseString = "";
-                    if (response != null) {
-                        System.out.println(response.toString());
-                        try {
-                            try {
-                                responseString =new String(this.getBody(), HttpHeaderParser.parseCharset(response.headers));
-                            } catch (AuthFailureError authFailureError) {
-                                authFailureError.printStackTrace();
-                            }
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                }
-
-            };
-
-            requestQueue.add(stringRequest);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-        ////////
-        /*
-        JSONObject jsonBody = new JSONObject();
-        try {
-            jsonBody.put("type", type);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        final String requestBody = jsonBody.toString();
-        System.out.println("Body="+requestBody);
-
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="https://fast-plateau-72318.herokuapp.com/onetype?type="+type;
         // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                System.out.println("RESP="+response);
-                arr.clear();
-                String[] list = response.split("u");
-                if(list==null){
-                    return;
-                }
-                for(int i=0; i<list.length; i++){
-                    if(list[i]==""){
-                        continue;
+                System.out.println("RESPONSE FROM SENDREQTYPE FRUIT: "+response);
+                //name,price,barcode
+                response=fixResponse(response);
+                System.out.println(response);
+                String[] stuff=response.split("\\|");
+                for (int i=0;i<stuff.length;i++){
+                    System.out.println(stuff[i]);
+                    ItemType item=new ItemType();
+                    String stuff2[]=stuff[i].split(",");
+                    for (int j=0;j<stuff2.length;j++){
+                        System.out.println(stuff2[j].trim());
+                        if (j%3==0){
+                            item.barcode=stuff2[j].trim();
+                            System.out.println("mod 3=0");
+                        }
+                        else if (j%3==1){
+                            item.name=stuff2[j].trim();
+                        }else if (j%3==2){
+                            item.price=Double.parseDouble(stuff2[j].trim());
+                            item.type=type;
+                            typeList.add(item);
+                            listAdapter.notifyDataSetChanged();
+
+
+                        }
                     }
-                    arr.add(list[i]);
                 }
-                gotResponse = true;
+
+
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                arr.add("N/A");
-            }
-        }) {
-            @Override
-            public String getBodyContentType() {
-                return "application/json; charset=utf-8";
-            }
 
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                try {
-                    return requestBody == null ? null : requestBody.getBytes("utf-8");
-                } catch (UnsupportedEncodingException uee) {
-                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-                    return null;
-                }
             }
-
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                String responseString = "";
-                if (response != null) {
-
-                    responseString = String.valueOf(response.statusCode);
-
-                }
-                return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-            }
-        };
+        });
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
-        */
+
+
     }
 
     /**
@@ -297,23 +198,40 @@ public class ItemListScreen extends AppCompatActivity {
     private void sendRequestName(String name) {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://www.google.com/name/"+name;
+        String url ="https://fast-plateau-72318.herokuapp.com/searchitem?keyword="+name;
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                arr.clear();
-                String[] list = response.split(",");
-                if(list==null){
-                    return;
-                }
-                for(int i=0; i<list.length; i++){
-                    if(list[i]==""){
-                        continue;
+                response=fixResponse(response);
+                System.out.println(response);
+
+                String[] stuff=response.split("\\|");
+                for (int i=0;i<stuff.length;i++) {
+                    System.out.println(stuff[i]);
+                    ItemType item = new ItemType();
+                    String stuff2[] = stuff[i].split(",");
+                    for (int j = 0; j < stuff2.length; j++) {
+                        System.out.println(stuff2[j].trim());
+                        if (j % 3 == 0) {
+                            item.barcode = stuff2[j].trim();
+                            System.out.println("mod 3=0");
+                        } else if (j % 3 == 1) {
+                            item.name = stuff2[j].trim();
+                        } else if (j % 3 == 2) {
+                            item.price = Double.parseDouble(stuff2[j].trim());
+                            item.type = "N/A";
+                            typeList.add(item);
+                            listAdapter.notifyDataSetChanged();
+
+
+                        }
                     }
-                    arr.add(list[i]);
                 }
+
+
+
                 gotResponse = true;
             }
         }, new Response.ErrorListener() {
@@ -338,6 +256,20 @@ public class ItemListScreen extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    private String fixResponse(String response){
+        response=response.replace("u'","");
+        response=response.replace("'name': ","");
+        response=response.replace("'price': Decimal('","");
+        response=response.replace("'barcode':","");
+        response=response.replace("')","");
+        response=response.replace("'","");
+        response=response.replace("{","");
+        response=response.replace("}","|");
+        response=response.trim();
+        return response;
+
     }
 
 }
