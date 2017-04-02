@@ -50,7 +50,7 @@
         android:textColor="@android:color/black"
         android:textStyle="italic"
         android:textSize="30dp"
-        android:id="@+id/tvAisle"
+        android:id="@+id/tvType"
         android:layout_alignBaseline="@+id/textView12"
         android:layout_alignBottom="@+id/textView12"
         android:layout_alignEnd="@+id/tvPrice" />
@@ -64,7 +64,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:layout_below="@+id/textView12"
         android:layout_alignStart="@+id/textView12"
-        android:layout_alignEnd="@+id/tvAisle" />
+        android:layout_alignEnd="@+id/tvType" />
 
     <Button
         android:text="Add To Cart"
@@ -104,7 +104,7 @@
         android:onClick="findInStore" />
 
     <TextView
-        android:text="Aisle:"
+        android:text="Type:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"

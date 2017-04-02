@@ -115,12 +115,12 @@ public class BarcodeMainActivity extends Activity implements View.OnClickListene
                     statusMessage.setText(R.string.barcode_success);
                     barcodeValue.setText(barcode.displayValue);
                     barcodeVal=barcode.displayValue;
-                    getInfo(barcodeVal);
+                    getInfo(barcodeVal);////sending the barcode info to go to more info screen
                     Log.d(TAG, "Barcode read: " + barcode.displayValue);
                 } else {
                     statusMessage.setText(R.string.barcode_failure);
                     ////////////////////TEST////////////////////////////////////////////////////
-                    getInfo("0000");
+                    getInfo("9310779300005");////sending the barcode info to go to more info screen
                     ///////////////////TEST////////////////////////////////////////////////////
                     Log.d(TAG, "No barcode captured, intent data is null");
                 }

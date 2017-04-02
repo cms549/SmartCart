@@ -149,33 +149,38 @@ public class ItemListScreen extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                System.out.println("RESPONSE FROM SENDREQTYPE FRUIT: "+response);
+                System.out.println("RESPONSE : "+response);
                 //name,price,barcode
-                response=fixResponse(response);
-                System.out.println(response);
-                String[] stuff=response.split("\\|");
-                for (int i=0;i<stuff.length;i++){
-                    System.out.println(stuff[i]);
+                String[] itts= response.split("\\}");
+                for (int i=0;i<itts.length;i++){//for each item
                     ItemType item=new ItemType();
-                    String stuff2[]=stuff[i].split(",");
-                    for (int j=0;j<stuff2.length;j++){
-                        System.out.println(stuff2[j].trim());
-                        if (j%3==0){
-                            item.barcode=stuff2[j].trim();
-                            System.out.println("mod 3=0");
+                    String[] fields = itts[i].split(",");
+                    for (int j=0;j<fields.length;j++){
+                        String st = fields[j];
+                        int f = st.indexOf("'");
+                        int se =st.indexOf("'",f+1);
+                        int th= st.indexOf("'",se+1);
+                        int fo= st.indexOf("'",th+1);
+                        String kw = st.substring(f+1,se);
+                        String value = st.substring(th+1,fo);
+                        if(kw.equals("name")){
+                            item.name=value;
                         }
-                        else if (j%3==1){
-                            item.name=stuff2[j].trim();
-                        }else if (j%3==2){
-                            item.price=Double.parseDouble(stuff2[j].trim());
-                            item.type=type;
-                            typeList.add(item);
-                            listAdapter.notifyDataSetChanged();
-
-
+                        else if(kw.equals("price")){
+                            item.price=Double.parseDouble(value);
                         }
+                        else if(kw.equals("barcode")){
+                            item.barcode=value;
+                        }
+                        else if(kw.equals("type")){
+                            item.type=value;
+                        }
+
                     }
+                    typeList.add(item);
                 }
+                listAdapter.notifyDataSetChanged();
+
 
 
 
@@ -204,31 +209,39 @@ public class ItemListScreen extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                response=fixResponse(response);
+
                 System.out.println(response);
 
-                String[] stuff=response.split("\\|");
+                String[] stuff=response.split("\\}");
                 for (int i=0;i<stuff.length;i++) {
                     System.out.println(stuff[i]);
                     ItemType item = new ItemType();
-                    String stuff2[] = stuff[i].split(",");
-                    for (int j = 0; j < stuff2.length; j++) {
-                        System.out.println(stuff2[j].trim());
-                        if (j % 3 == 0) {
-                            item.barcode = stuff2[j].trim();
-                            System.out.println("mod 3=0");
-                        } else if (j % 3 == 1) {
-                            item.name = stuff2[j].trim();
-                        } else if (j % 3 == 2) {
-                            item.price = Double.parseDouble(stuff2[j].trim());
-                            item.type = "N/A";
-                            typeList.add(item);
-                            listAdapter.notifyDataSetChanged();
-
-
+                    String[] fields = stuff[i].split(",");
+                    for (int j=0;j<fields.length;j++){
+                        String st = fields[j];
+                        int f = st.indexOf("'");
+                        int se =st.indexOf("'",f+1);
+                        int th= st.indexOf("'",se+1);
+                        int fo= st.indexOf("'",th+1);
+                        String kw = st.substring(f+1,se);
+                        String value = st.substring(th+1,fo);
+                        if(kw.equals("name")){
+                            item.name=value;
                         }
+                        else if(kw.equals("price")){
+                            item.price=Double.parseDouble(value);
+                        }
+                        else if(kw.equals("barcode")){
+                            item.barcode=value;
+                        }
+                        else if(kw.equals("type")){
+                            item.type=value;
+                        }
+
                     }
+                    typeList.add(item);
                 }
+                listAdapter.notifyDataSetChanged();
 
 
 
@@ -258,18 +271,5 @@ public class ItemListScreen extends AppCompatActivity {
         return false;
     }
 
-    private String fixResponse(String response){
-        response=response.replace("u'","");
-        response=response.replace("'name': ","");
-        response=response.replace("'price': Decimal('","");
-        response=response.replace("'barcode':","");
-        response=response.replace("')","");
-        response=response.replace("'","");
-        response=response.replace("{","");
-        response=response.replace("}","|");
-        response=response.trim();
-        return response;
-
-    }
 
 }

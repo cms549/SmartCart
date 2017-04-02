@@ -57,7 +57,7 @@ public class ItemTypesScreen extends AppCompatActivity {
         //Set adapter
         lvType.setAdapter(ad);
 
-        //DELETE SOMETHING FROM LIST
+
         lvType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> taskList, View v, int pos, long id) {

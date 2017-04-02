@@ -18,23 +18,21 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.Set;
 
 public class MoreInfoScreen extends AppCompatActivity {
 
     TextView tvName;
     TextView tvPrice;
-    TextView tvAisle;
+    TextView tvType;
     TextView tvDesc;
     EditText etAmt;
 
+    String rfid;
+    String barcode;
     String name;
     double price;
+    int x;
+    int y;
 
 
 
@@ -45,52 +43,15 @@ public class MoreInfoScreen extends AppCompatActivity {
 
         tvName = (TextView) findViewById(R.id.tvName);
         tvPrice = (TextView) findViewById(R.id.tvPrice);
-        tvAisle = (TextView) findViewById(R.id.tvAisle);
+        tvType = (TextView) findViewById(R.id.tvType);
         tvDesc = (TextView) findViewById(R.id.tvDescription);
         etAmt = (EditText) findViewById(R.id.etAmt);
 
 
         Intent intent=getIntent();
         String barcode=intent.getStringExtra("barcode");
+        sendRequest(barcode);
 
-        if (barcode.equals("9310779300005")){
-            tvName.setText("Apple");
-            tvPrice.setText("$1.29");
-        }
-        else if (barcode.equals("5012345678900")){
-            tvName.setText("Ramen Noodles");
-            tvPrice.setText("$0.50");
-        }
-        else if (barcode.equals("036000291452")){
-            tvName.setText("Paper Towels");
-            tvPrice.setText("$10.49");
-        }
-        else if (barcode.equals("234567899992")){
-            tvName.setText("Pasta");
-            tvPrice.setText("$2.99");
-        }
-        else if (barcode.equals("671860013624")){
-            tvName.setText("Tacos");
-            tvPrice.setText("$1.00");
-        }
-        else {
-            tvName.setText("TEST");
-            tvPrice.setText("$10.99");
-        }
-
-
-        /*
-        //Grab the input
-        Intent intent = getIntent();
-        String id = (String) intent.getSerializableExtra("itemID");
-        if(isOnline()){
-            sendRequest(id);
-        }
-        else{
-            tvName.setText("Cannot connect to server.");
-        }
-
-           */
     }
 
 
@@ -115,14 +76,44 @@ public class MoreInfoScreen extends AppCompatActivity {
     private void sendRequest(String id) {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://www.google.com/id/"+id;
+        String url ="https://fast-plateau-72318.herokuapp.com/oneitem?barcode="+id;
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                String[] list = response.split(",");
+
                 //set the name, price for both variable and for text view
+                String[] fields = response.split(",");
+                for (int j=0;j<fields.length;j++) {
+                    String st = fields[j];
+                    int f = st.indexOf("'");
+                    int se = st.indexOf("'", f + 1);
+                    int th = st.indexOf("'", se + 1);
+                    int fo = st.indexOf("'", th + 1);
+                    String kw = st.substring(f + 1, se);
+                    String value = st.substring(th + 1, fo);
+                    if (kw.equals("name")) {
+                        name = value;
+                    } else if (kw.equals("price")) {
+                        price = Double.parseDouble(value);
+                    } else if (kw.equals("barcode")) {
+                        barcode = (value);
+                    } else if (kw.equals("type")) {
+                        tvType.setText(value);
+                    } else if (kw.equals("dsc")) {
+                        tvDesc.setText(value);
+                    } else if (kw.equals("rfid")) {
+                        rfid = value;
+                    }
+
+
+                }
+
+                tvName.setText(name);
+                tvPrice.setText("$"+price);
+
+                sendRFIDrequest();
 
 
             }
@@ -136,12 +127,63 @@ public class MoreInfoScreen extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
+    private void sendRFIDrequest() {
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url ="https://fast-plateau-72318.herokuapp.com/onelocation?rfid="+rfid;
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                //set the name, price for both variable and for text view
+                System.out.println(response);
+                response = response.replace("}","");
+                String[] fields = response.split(",");
+                for (int j=0;j<fields.length;j++) {
+                    String st = fields[j];
+                    int f = st.indexOf("'");
+                    int se = st.indexOf("'", f + 1);
+                    int th = st.indexOf(":");
+                    String kw = st.substring(f + 1, se);
+                    String value = st.substring(th + 1).trim();
+                    if (kw.equals("x")) {
+                        x = Integer.parseInt(value);
+                    } else if (kw.equals("y")) {
+                        y = Integer.parseInt(value);
+                    }
+
+
+                }
+
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+
+    }
+
     public void findInStore(View view) {
         //open up the map view for it
-        if(isOnline()){
+        if(!isOnline()){
             Toast.makeText(this, "Error: Cannot Connect To Server", Toast.LENGTH_LONG).show();
             return;
         }
+        Intent intent=new Intent(getApplicationContext(),MapActivity.class);
+        intent.putExtra("ItemName",name);
+        intent.putExtra("x",x);
+        intent.putExtra("y",y);
+        //System.out.println(price);
+        startActivity(intent);
 
     }
 
@@ -161,43 +203,72 @@ public class MoreInfoScreen extends AppCompatActivity {
             Toast.makeText(this, "Error: Must Specify Positive Number to Add to Cart", Toast.LENGTH_LONG).show();
             return;
         }
-        //Add to cart
-
-        //Intent intent=new Intent(getApplicationContext(),MyCartScreen.class);
-        //startActivity(intent);
-/*
-        //Update shared pref - balance and list
-        Gson gson = new Gson();
-        // Look at preferences
+        //Need to save the name, price, barcode, and amount for each item-> make 4 arrays where indexes match
         SharedPreferences myPref = getSharedPreferences("SmartCart", 0);
         SharedPreferences.Editor editor = myPref.edit();
-        String bal= myPref.getString("cartbalance", "0.00");
-        double balance = Double.parseDouble(bal);
-        balance = balance + price*quant;
-        ArrayList<String> itemsAsJSON = (ArrayList<String>) myPref.getStringSet("itemsList",null);
-        if(itemsAsJSON==null){
-            itemsAsJSON= new ArrayList<String>();
+        //SHARED PREFERENCES ARRAYS - HOW WE SAVED TO FILE
+        String[] cnames= myPref.getString("cnames", "").split(",");
+        String[] cprices= myPref.getString("cprices", "").split(",");
+        String[] cbarcdoes= myPref.getString("cbarcodes", "").split(",");
+        String[] camts= myPref.getString("camts", "").split(",");
+        //search through all the names to see if repeat
+        boolean found = false;
+        for(int i=0; i<cnames.length; i++){
+            if(name.equals(cnames[i])){
+                //increment the amount
+                int lastamt = Integer.parseInt(camts[i]);
+                camts[i]= (lastamt +samt);
+                //save the amount again
+                String ca = "";
+                for(int j=0; j<camts.length; j++){
+                    ca= ","+camts[j];
+                }
+                editor.putString("camts", ""+ca);
+                editor.apply();
+                editor.commit();
+                found =true;
+                break;
+            }
         }
-        Item c = new Item(name,quant,price);
-        String json = gson.toJson(c);
-        itemsAsJSON.add(json);
+        if(!found){
+            // add to all arrays
+            String ns= myPref.getString("cnames", "")+","+name;
+            String ps = myPref.getString("cprices", "")+","+price;
+            String bs= myPref.getString("cbarcodes", "")+","+barcode;
+            String cs= myPref.getString("camts", "")+","+samt;
+            editor.putString("cnames", ""+ns);
+            editor.putString("cprices", ""+ps);
+            editor.putString("cbarcodes", ""+bs);
+            editor.putString("camts", ""+cs);
+            editor.apply();
+            editor.commit();
 
-        editor.putStringSet("itemsList", (Set<String>) itemsAsJSON);
-        editor.putString("cartbalance", ""+balance);
-        editor.apply();
-     */
-        ///////////////////////////////Test////////////
+        }
+
+
+
         Intent intent=new Intent(getApplicationContext(),MyCartScreen.class);
-        intent.putExtra("ItemName",tvName.getText());
-        Double price=Double.parseDouble(tvPrice.getText().subSequence(1,tvPrice.getText().length()).toString());
-        System.out.println(price);
-        intent.putExtra("price",price);
-        intent.putExtra("quant",quant);
-        //System.out.println(price);
         startActivity(intent);
 
 
 
+
+    }
+
+    private String fixResponse(String response){
+        response=response.replace("u'","");
+        response=response.replace("'name': ","");
+        response=response.replace("'price': Decimal('","");
+        response=response.replace("'barcode':","");
+        response=response.replace("')","");
+        response=response.replace("'","");
+        response=response.replace("{","");
+        response=response.replace("}","");
+        response=response.replace("type: ","");
+        response=response.replace("dsc: ","");
+        response=response.replace("rfid: ","");
+        response=response.trim();
+        return response;
 
     }
 

@@ -35,11 +35,6 @@ public class MyCartScreen extends AppCompatActivity {
         balance=0;
         //set up search bar
         Intent intent = getIntent();
-        String itemName=intent.getStringExtra("ItemName");
-        System.out.println(itemName);
-        Double price=intent.getDoubleExtra("price",0.0);
-        int quant=intent.getIntExtra("quant",0);
-
         searchfrag = (SearchFragment) intent.getSerializableExtra("searchfrag");
         if(searchfrag==null){
             searchfrag = new SearchFragment();
@@ -50,7 +45,7 @@ public class MyCartScreen extends AppCompatActivity {
 
         itemsList = new ArrayList<Item>();
 
-        //loadFromSP();
+        loadFromSP();
 
 
         lvCart = (ListView) findViewById(R.id.lvSearch);
@@ -81,10 +76,20 @@ public class MyCartScreen extends AppCompatActivity {
             }
         });
 
-        itemsList.add(new Item(itemName,quant,price));
-        ad.notifyDataSetChanged();
-        balance=balance+quant*price;
-        tvbal.setText("Total: $"+balance);
+
+        lvCart.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> taskList, View v, int pos, long id) {
+                Item i = itemsList.get(pos);
+                //open up list view for this specific type
+                Intent nextScreen = new Intent(getApplication(), MoreInfoScreen.class);
+                nextScreen.putExtra("barcode", i.barcode);
+                //start next screen
+                startActivity(nextScreen);
+
+
+            }
+        });
 
 
     }
@@ -96,22 +101,25 @@ public class MyCartScreen extends AppCompatActivity {
 
         itemsList.clear();
         String s = "Total: $";
-        Gson gson = new Gson();
         // Look at preferences
         SharedPreferences myPref = getSharedPreferences("SmartCart", 0);
-        String bal= myPref.getString("cartbalance", "0.00");
-        balance = Double.parseDouble(bal);
-        tvbal.setText(s+bal);
-        ArrayList<String> a = (ArrayList<String>) myPref.getStringSet("itemsList",null);
-        if(a==null){
-            return;
+        balance = 0;
+        String[] cnames= myPref.getString("cnames", "").split(",");
+        String[] cprices= myPref.getString("cprices", "").split(",");
+        String[] cbarcdoes= myPref.getString("cbarcodes", "").split(",");
+        String[] camts= myPref.getString("camts", "").split(",");
+
+
+        for(int i=0; i<cnames.length; i++){
+            if (!(cnames[i].equals(""))){
+                Item it = new Item(cnames[i], Integer.parseInt(camts[i]), Double.parseDouble(cprices[i]), cbarcdoes[i]);
+                itemsList.add(it);
+                balance= balance+it.price*it.quant;
+            }
+
         }
 
-        for(int i=0; i<a.size(); i++){
-            String st = a.get(i);
-            Item it = gson.fromJson(st, Item.class);
-            itemsList.add(it);
-        }
+        tvbal.setText(s+balance);
 
     }
 
@@ -126,17 +134,21 @@ public class MyCartScreen extends AppCompatActivity {
         //update shared pref
         SharedPreferences myPref = getSharedPreferences("SmartCart", 0);
         SharedPreferences.Editor editor = myPref.edit();
-        ArrayList<String> itemsAsJSON = new ArrayList<String>(itemsList.size());
-        Gson gson = new Gson();
+        String cnames="", cprices="", camts="", cbarcodes="";
         for(int i=0; i<itemsList.size(); i++){
             Item c = itemsList.get(i);
-            String json = gson.toJson(c);
-            itemsAsJSON.add(json);
+            cnames = cnames+ ","+c.item;
+            cprices= cprices + ","+c.price;
+            camts= camts+","+c.quant;
+            cbarcodes=cbarcodes+","+c.barcode;
         }
 
+        editor.putString("cnames", ""+cnames);
+        editor.putString("cprices", ""+cprices);
+        editor.putString("cbarcodes", ""+cbarcodes);
+        editor.putString("camts", ""+camts);
+        editor.apply();
 
-        editor.putStringSet("itemsList", (Set<String>) itemsAsJSON);
-        editor.putString("cartbalance", ""+balance);
         editor.commit();
 
     }
