@@ -36,6 +36,7 @@
         <activity android:name=".ItemScanScreen" />
         <activity android:name=".ItemListScreen" />
         <activity android:name=".ItemTypesScreen" />
+        <activity android:name=".MapActivity" />
         <activity android:name=".MoreInfoScreen"></activity>
 
         <provider

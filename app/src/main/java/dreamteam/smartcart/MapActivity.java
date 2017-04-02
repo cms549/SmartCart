@@ -22,10 +22,10 @@ public class MapActivity extends Activity {
         CustomView cv = new CustomView(this);
         setContentView(cv);
 
-        Intent intent=getIntent();
+/*        Intent intent=getIntent();
         endx=Integer.parseInt(intent.getStringExtra("x"));
         endy=Integer.parseInt(intent.getStringExtra("y"));
-
+*/
         stx =0;//get from bluetooth -> maybe have it saved in a file???
         sty=0;
 
