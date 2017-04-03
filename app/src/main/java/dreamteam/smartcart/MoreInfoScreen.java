@@ -82,38 +82,46 @@ public class MoreInfoScreen extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
+                System.out.println("THE RESPONSE IS "+response);
                 //set the name, price for both variable and for text view
-                String[] fields = response.split(",");
-                for (int j=0;j<fields.length;j++) {
-                    String st = fields[j];
-                    int f = st.indexOf("'");
-                    int se = st.indexOf("'", f + 1);
-                    int th = st.indexOf("'", se + 1);
-                    int fo = st.indexOf("'", th + 1);
-                    String kw = st.substring(f + 1, se);
-                    String value = st.substring(th + 1, fo);
-                    if (kw.equals("name")) {
-                        name = value;
-                    } else if (kw.equals("price")) {
-                        price = Double.parseDouble(value);
-                    } else if (kw.equals("barcode")) {
-                        barcode = (value);
-                    } else if (kw.equals("type")) {
-                        tvType.setText(value);
-                    } else if (kw.equals("dsc")) {
-                        tvDesc.setText(value);
-                    } else if (kw.equals("rfid")) {
-                        rfid = value;
+                if (!(response.equals(""))){
+                    String[] fields = response.split(",");
+
+                    for (int j=0;j<fields.length;j++) {
+                        String st = fields[j];
+                        int f = st.indexOf("'");
+                        int se = st.indexOf("'", f + 1);
+                        int th = st.indexOf("'", se + 1);
+                        int fo = st.indexOf("'", th + 1);
+                        String kw = st.substring(f + 1, se);
+                        String value = st.substring(th + 1, fo);
+                        if (kw.equals("name")) {
+                            name = value;
+                        } else if (kw.equals("price")) {
+                            price = Double.parseDouble(value);
+                        } else if (kw.equals("barcode")) {
+                            barcode = (value);
+                        } else if (kw.equals("type")) {
+                            tvType.setText(value);
+                        } else if (kw.equals("dsc")) {
+                            tvDesc.setText(value);
+                        } else if (kw.equals("rfid")) {
+                            rfid = value;
+                        }
+
                     }
 
 
+                    tvName.setText(name);
+                    tvPrice.setText("$"+price);
+
+                    sendRFIDrequest();
+
+                }else {
+                    makeToast();
+
                 }
 
-                tvName.setText(name);
-                tvPrice.setText("$"+price);
-
-                sendRFIDrequest();
 
 
             }
@@ -125,6 +133,10 @@ public class MoreInfoScreen extends AppCompatActivity {
         });
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
+    }
+
+    private void makeToast() {
+        Toast.makeText(this,"No response from server",Toast.LENGTH_LONG).show();
     }
 
     private void sendRFIDrequest() {

@@ -98,7 +98,7 @@ public class ItemListScreen extends AppCompatActivity {
                 if(gotResponse) {
                     //open up specific info for this item
                     Intent nextScreen = new Intent(getApplication(), MoreInfoScreen.class);
-                    nextScreen.putExtra("itemID", arr.get(pos));
+                    nextScreen.putExtra("itemID", typeList.get(pos).barcode);
                     //start next screen
                     startActivity(nextScreen);
                 }
