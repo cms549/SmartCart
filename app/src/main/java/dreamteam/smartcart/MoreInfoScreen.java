@@ -237,7 +237,7 @@ public class MoreInfoScreen extends AppCompatActivity {
             if(name.equals(cnames[i])){
                 //increment the amount
                 int lastamt = Integer.parseInt(camts[i]);
-                camts[i]= (lastamt +samt);
+                camts[i]= (lastamt +quant+"");
                 //save the amount again
                 String ca = "";
                 for(int j=0; j<camts.length; j++){

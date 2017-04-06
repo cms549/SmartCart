@@ -66,6 +66,13 @@ public class MainActivity extends AppCompatActivity {
         setMyCartBalance();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setOccupancyField();
+        setMyCartBalance();
+    }
+
     /**
      * Checks if you are already connected to a cart
      * @return

@@ -143,6 +143,7 @@ public class MyCartScreen extends AppCompatActivity {
             cbarcodes=cbarcodes+","+c.barcode;
         }
 
+        editor.putString("cartbalance", ""+balance);
         editor.putString("cnames", ""+cnames);
         editor.putString("cprices", ""+cprices);
         editor.putString("cbarcodes", ""+cbarcodes);

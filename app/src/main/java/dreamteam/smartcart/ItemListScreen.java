@@ -91,14 +91,14 @@ public class ItemListScreen extends AppCompatActivity {
             sendRequestName(name);
         }
 
-        //DELETE SOMETHING FROM LIST
+
         lvSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> taskList, View v, int pos, long id) {
                 if(gotResponse) {
                     //open up specific info for this item
                     Intent nextScreen = new Intent(getApplication(), MoreInfoScreen.class);
-                    nextScreen.putExtra("itemID", typeList.get(pos).barcode);
+                    nextScreen.putExtra("barcode", typeList.get(pos).barcode);
                     //start next screen
                     startActivity(nextScreen);
                 }
@@ -210,7 +210,7 @@ public class ItemListScreen extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
 
-                System.out.println(response);
+                System.out.println("RESPONSE" + response);
 
                 String[] stuff=response.split("\\}");
                 for (int i=0;i<stuff.length;i++) {

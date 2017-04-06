@@ -54,38 +54,26 @@ public class SyncCartScreen extends AppCompatActivity {
             startActivityForResult(turnOn, 0);
             Toast.makeText(getApplicationContext(), "Turned on BT",Toast.LENGTH_LONG).show();
         }
-
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-        filter.addAction(BluetoothDevice.ACTION_FOUND);
-        this.registerReceiver(mReceiver, filter);
-
-        BA.startDiscovery();
-
-
-        //pairedDevices = BA.getBondedDevices();
-        pairedDevices = new HashSet<BluetoothDevice>();
         list = new ArrayList<String>();
+        //pairedDevices = new HashSet<BluetoothDevice>();
+        list.add("Before");
+        pairedDevices=BA.getBondedDevices();
+        list.add("size="+pairedDevices.size());
+        BluetoothDevice btd = pairedDevices.iterator().next();
+        list.add(btd.toString());
+        //list.add(pairedDevices.iterator().next().getName());
+        if(pairedDevices.size()==0){
+            list.add("NO PAIRED DEVICES AVAILABLE");
 
-
-
-        /*
-        for(BluetoothDevice bt : pairedDevices) {
-
-
-            list.add(bt.getName());
-
+            //return;
         }
-        Toast.makeText(getApplicationContext(), "Showing Paired Devices",Toast.LENGTH_SHORT).show();
-    */
+
+
+
         final ArrayAdapter adapter = new  ArrayAdapter(this,android.R.layout.simple_list_item_1, list);
 
         lvSC.setAdapter(adapter);
-        if(pairedDevices.size()==0){
-            list.add("NO PAIRED DEVICES AVAILABLE");
-            return;
-        }
+
 
         lvSC.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -100,6 +88,18 @@ public class SyncCartScreen extends AppCompatActivity {
 
             }
         });
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        filter.addAction(BluetoothDevice.ACTION_FOUND);
+        this.registerReceiver(mReceiver, filter);
+
+        BA.startDiscovery();
+
+
+
+
 
 
 
