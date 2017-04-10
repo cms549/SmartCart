@@ -149,6 +149,7 @@ public class ItemListScreen extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                gotResponse=true;
                 System.out.println("RESPONSE : "+response);
                 //name,price,barcode
                 String[] itts= response.split("\\}");

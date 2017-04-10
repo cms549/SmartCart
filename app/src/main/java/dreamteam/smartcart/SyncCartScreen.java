@@ -2,21 +2,26 @@ package dreamteam.smartcart;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.ParcelUuid;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -55,17 +60,15 @@ public class SyncCartScreen extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Turned on BT",Toast.LENGTH_LONG).show();
         }
         list = new ArrayList<String>();
-        //pairedDevices = new HashSet<BluetoothDevice>();
-        list.add("Before");
         pairedDevices=BA.getBondedDevices();
-        list.add("size="+pairedDevices.size());
-        BluetoothDevice btd = pairedDevices.iterator().next();
-        list.add(btd.toString());
+        Iterator<BluetoothDevice> it = pairedDevices.iterator();
+        if(it.hasNext()){
+            BluetoothDevice btd = pairedDevices.iterator().next();
+            list.add(btd.getName());
+        }
         //list.add(pairedDevices.iterator().next().getName());
         if(pairedDevices.size()==0){
             list.add("NO PAIRED DEVICES AVAILABLE");
-
-            //return;
         }
 
 
@@ -89,72 +92,100 @@ public class SyncCartScreen extends AppCompatActivity {
             }
         });
 
+        /*
         IntentFilter filter = new IntentFilter();
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         filter.addAction(BluetoothDevice.ACTION_FOUND);
         this.registerReceiver(mReceiver, filter);
-
         BA.startDiscovery();
 
-
-
-
-
-
+        */
 
 
     }
 
 
     private void connectWithBT(BluetoothDevice bt) {
+
+        //////////////////////
+        ParcelUuid[] idArray = bt.getUuids();
+        java.util.UUID MY_UUID = java.util.UUID.fromString(idArray[0].toString());
+        /////////////
         //Establish a connection
-        //bt.connectGatt();
 
-        //update shared pref
-        SharedPreferences myPref = getSharedPreferences("SmartCart", 0);
-        SharedPreferences.Editor editor = myPref.edit();
-        editor.putBoolean("cartconnected", true);
-        editor.putString("btcode", bt.getAddress());
-        editor.commit();
-        finish();
+        if (bt.getBondState() == bt.BOND_BONDED) {
 
-    }
+            System.out.println("bond bonded =" + bt.getName());
+            BluetoothSocket mSocket = null;
+            try {
 
 
-    //The BroadcastReceiver that listens for bluetooth broadcasts
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            //Toast.makeText(context, "recieved something ", Toast.LENGTH_LONG).show();
-            String action = intent.getAction();
-
-            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                Toast.makeText(context, "FOUND BLUETOOTH DEVICE", Toast.LENGTH_LONG).show();
-                //Device found
-                pairedDevices.add(device);
-                list.add(device.getName());
-                lvSC.invalidateViews();
-
+                mSocket = bt.createInsecureRfcommSocketToServiceRecord(MY_UUID);
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
             }
-            else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                Toast.makeText(context, "Fini ", Toast.LENGTH_LONG).show();
+            try {
+
+                mSocket.connect();
+
+            } catch (IOException e) {
+                try {
+
+                    mSocket.close();
+                    System.out.println("CLOSED CONNECTION");
+                } catch (IOException e1) {
+
+                    e1.printStackTrace();
+                }
 
 
             }
-            else if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
-                Toast.makeText(context, "Commence ", Toast.LENGTH_LONG).show();
+        }
 
-
-            }
-
+            //update shared pref
+            SharedPreferences myPref = getSharedPreferences("SmartCart", 0);
+            SharedPreferences.Editor editor = myPref.edit();
+            editor.putBoolean("cartconnected", true);
+            editor.putString("btcode", bt.getAddress());
+            editor.commit();
+            finish();
 
         }
-    };
 
-}
+
+        //The BroadcastReceiver that listens for bluetooth broadcasts
+        final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                //Toast.makeText(context, "recieved something ", Toast.LENGTH_LONG).show();
+                String action = intent.getAction();
+
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
+                if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                    Toast.makeText(context, "FOUND BLUETOOTH DEVICE", Toast.LENGTH_LONG).show();
+                    //Device found
+                    pairedDevices.add(device);
+                    list.add(device.getName());
+                    lvSC.invalidateViews();
+
+                } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+                    Toast.makeText(context, "Fini ", Toast.LENGTH_LONG).show();
+
+
+                } else if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
+                    Toast.makeText(context, "Commence ", Toast.LENGTH_LONG).show();
+
+
+                }
+
+
+            }
+        };
+
+    }
 
 
 

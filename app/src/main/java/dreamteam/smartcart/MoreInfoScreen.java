@@ -234,16 +234,18 @@ public class MoreInfoScreen extends AppCompatActivity {
         //search through all the names to see if repeat
         boolean found = false;
         for(int i=0; i<cnames.length; i++){
-            if(name.equals(cnames[i])){
+            if(name.equals(cnames[i].trim())){
                 //increment the amount
                 int lastamt = Integer.parseInt(camts[i]);
-                camts[i]= (lastamt +quant+"");
+                camts[i]= (lastamt +quant)+"";
                 //save the amount again
                 String ca = "";
                 for(int j=0; j<camts.length; j++){
-                    ca= ","+camts[j];
+                    ca= ca+camts[j]+",";
                 }
-                editor.putString("camts", ""+ca);
+                System.out.println("Orginal= "+myPref.getString("camts", ""));
+                System.out.println("Newone=" +ca);
+                editor.putString("camts", ca);
                 editor.apply();
                 editor.commit();
                 found =true;

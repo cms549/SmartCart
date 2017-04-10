@@ -9,6 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.google.gson.Gson;
+
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -61,15 +63,14 @@ public class MyCartScreen extends AppCompatActivity {
         lvCart.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> taskList, View v, int pos, long id) {
-                if(pos==0){
-                    //can't delete the header row
-                    return true;
-                }
+
                 Item i = itemsList.get(pos);
                 double pi = i.price *i.quant;
                 balance = balance-pi;
-                tvbal.setText("Total: $"+balance);
+                setBalance(balance);
+
                 itemsList.remove(pos);
+               // lvCart.notify();
                 lvCart.invalidateViews();
                 saveToSP();
                 return true;
@@ -94,13 +95,19 @@ public class MyCartScreen extends AppCompatActivity {
 
     }
 
+    private void setBalance(double balance) {
+
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        String b="Total: "+ formatter.format(balance);
+        tvbal.setText(b);
+    }
+
     /**
      * Loads all three array lists and the balance
      */
     private void loadFromSP(){
 
         itemsList.clear();
-        String s = "Total: $";
         // Look at preferences
         SharedPreferences myPref = getSharedPreferences("SmartCart", 0);
         balance = 0;
@@ -110,17 +117,33 @@ public class MyCartScreen extends AppCompatActivity {
         String[] camts= myPref.getString("camts", "").split(",");
 
 
+
         for(int i=0; i<cnames.length; i++){
-            if (!(cnames[i].equals(""))){
+            if (!(cnames[i].trim().equals(""))){
                 Item it = new Item(cnames[i], Integer.parseInt(camts[i]), Double.parseDouble(cprices[i]), cbarcdoes[i]);
+                //Item it = new Item(cnames[i], 1, Double.parseDouble(cprices[i]), cbarcdoes[i]);
                 itemsList.add(it);
                 balance= balance+it.price*it.quant;
             }
 
         }
+        setBalance(balance);
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        String b= formatter.format(balance);
+        b= b.substring(1);
+        SharedPreferences.Editor editor = myPref.edit();
+        editor.putString("cartbalance", b);
+        //editor.putString("camts", ",1,1,");
+        editor.apply();
 
-        tvbal.setText(s+balance);
+        editor.commit();
 
+
+    }
+
+    private void printelements(String[] cnames) {
+        for(int i=0; i<cnames.length; i++)
+            System.out.print(cnames[i]+",");
     }
 
 
@@ -143,7 +166,10 @@ public class MyCartScreen extends AppCompatActivity {
             cbarcodes=cbarcodes+","+c.barcode;
         }
 
-        editor.putString("cartbalance", ""+balance);
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        String b= formatter.format(balance);
+        b= b.substring(1);
+        editor.putString("cartbalance", b);
         editor.putString("cnames", ""+cnames);
         editor.putString("cprices", ""+cprices);
         editor.putString("cbarcodes", ""+cbarcodes);
