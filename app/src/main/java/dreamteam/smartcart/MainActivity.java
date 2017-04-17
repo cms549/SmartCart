@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -33,10 +34,11 @@ public class MainActivity extends AppCompatActivity {
      */
     TextView tvtot;
 
-
-    MapFragment mapfrag;
+    Button bsync;
+    private Button bunsync;
 
     SearchFragment searchfrag;
+    private boolean isSync;
 
 
 
@@ -47,15 +49,14 @@ public class MainActivity extends AppCompatActivity {
 
         tvocc = (TextView) findViewById(R.id.tvocc);
         tvtot = (TextView) findViewById(R.id.tvtot);
+        bsync = (Button) findViewById(R.id.bsync);
+        bunsync = (Button) findViewById(R.id.bunsync);
 
         if(!isOnline()){
-            TextView tv = (TextView) findViewById(R.id.tvmap);
-            tv.setText("No internet connection.");
+           // TextView tv = (TextView) findViewById(R.id.tvmap);
+            //tv.setText("No internet connection.");
         }
-        else if(isConnectedToCart()){
-            mapfrag = new MapFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.fragMap, mapfrag).commit();
-        }
+
 
         searchfrag = new SearchFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.fragsearch, searchfrag).commit();
@@ -73,21 +74,7 @@ public class MainActivity extends AppCompatActivity {
         setMyCartBalance();
     }
 
-    /**
-     * Checks if you are already connected to a cart
-     * @return
-     */
-    private boolean isConnectedToCart() {
-        // Look at preferences
-        SharedPreferences myPref = getSharedPreferences("SmartCart", 0);
-        Boolean isconnected= myPref.getBoolean("cartconnected", false);
 
-        //check shared pref
-        if(isconnected){
-           return true;
-        }
-        return false;
-    }
 
     /**
      * Sets the balance text
@@ -98,6 +85,16 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences myPref = getSharedPreferences("SmartCart", 0);
         String bal= myPref.getString("cartbalance", "0.00");
         tvtot.setText(s+bal);
+
+        isSync = myPref.getBoolean("isSync", false);
+        if(isSync){
+            bsync.setVisibility(View.INVISIBLE);
+            bunsync.setVisibility(View.VISIBLE);
+        }
+        else{
+            bsync.setVisibility(View.VISIBLE);
+            bunsync.setVisibility(View.INVISIBLE);
+        }
     }
 
     /**
@@ -255,4 +252,15 @@ public class MainActivity extends AppCompatActivity {
         decrementOccupancy();
     }
 
+    public void disconnectFromCart(View view) {
+
+
+        SharedPreferences myPref = getSharedPreferences("SmartCart", 0);
+        SharedPreferences.Editor editor = myPref.edit();
+        editor.putBoolean("isSync", false);
+        //editor.putString("btcode", bt.getAddress());
+        editor.commit();
+        setMyCartBalance();
+
+    }
 }

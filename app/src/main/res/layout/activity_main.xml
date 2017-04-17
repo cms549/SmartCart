@@ -70,45 +70,6 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/fragMap"
-        android:background="@android:color/background_light"
-        android:layout_below="@+id/bcart"
-        android:layout_alignParentStart="true">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-
-            android:id="@+id/connect_cart">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Connect To A Cart To Use Navigation Feature"
-                android:textColor="@android:color/black"
-                android:textAlignment="center"
-                android:textStyle="italic"
-                android:layout_margin="20dp"
-                android:textSize="17dp"
-                android:id="@+id/tvmap" />
-
-            <Button
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Sync Cart"
-
-                android:textAlignment="center"
-                android:onClick="goToSyncCart"
-                android:background="@drawable/button_border"
-                android:layout_gravity="center"
-                android:textColor="@android:color/black"/>
-
-        </LinearLayout>
-    </FrameLayout>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_above="@id/textView5"
         android:id="@+id/fragsearch"
         android:layout_alignParentStart="true"
@@ -162,5 +123,48 @@
         android:id="@+id/tvtot"
         android:layout_alignParentBottom="true"
         android:layout_toStartOf="@+id/imageView2" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragMap"
+        android:background="@android:color/background_light"
+        android:layout_below="@+id/bcart"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            android:id="@+id/connect_cart">
+
+            <Button
+                android:layout_width="130dp"
+                android:id="@+id/bsync"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Sync Cart"
+
+                android:textAlignment="center"
+                android:onClick="goToSyncCart"
+                android:background="@drawable/button_border"
+                android:layout_gravity="center"
+                android:textColor="@android:color/black"/>
+            <Button
+                android:layout_width="130dp"
+                android:id="@+id/bunsync"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Disconnect Cart"
+
+                android:textAlignment="center"
+                android:onClick="disconnectFromCart"
+                android:background="@drawable/button_border"
+                android:layout_gravity="center"
+                android:textColor="@android:color/black"/>
+
+        </LinearLayout>
+    </FrameLayout>
 
 </RelativeLayout>

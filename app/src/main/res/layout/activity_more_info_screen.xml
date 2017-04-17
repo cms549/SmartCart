@@ -52,42 +52,6 @@
         android:layout_alignBottom="@+id/textView12"
         android:layout_alignEnd="@+id/tvPrice" />
 
-    <Button
-        android:text="Add To Cart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
-        android:background="@drawable/button_border"
-        android:id="@+id/baddToCart"
-        android:padding="5dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/textView11"
-        android:onClick="addToCart" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/etAmt"
-        android:layout_marginBottom="12dp"
-        android:hint="Enter Amount to Add to Cart..."
-        android:background="@drawable/text_border"
-        android:layout_above="@+id/baddToCart"
-        android:layout_alignStart="@+id/textView12"
-        android:layout_alignEnd="@+id/bfindInStore" />
-
-    <Button
-        android:text="Find In Store"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_border"
-        android:id="@+id/bfindInStore"
-        android:padding="5dp"
-        android:layout_alignBaseline="@+id/baddToCart"
-        android:layout_alignBottom="@+id/baddToCart"
-        android:layout_toEndOf="@+id/tvName"
-        android:onClick="findInStore" />
 
     <TextView
         android:text="Type:"
@@ -120,14 +84,53 @@
         android:layout_below="@+id/textView12"
         android:layout_alignParentStart="true" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="150dp"
-        android:layout_below="@+id/textView7"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="100dp"
-        android:id="@+id/moreInfoImage" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/etAmt"
+        android:layout_marginBottom="69dp"
+        android:hint="Enter Amount to Add to Cart..."
+        android:background="@drawable/text_border"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+        <Button
+            android:text="Add To Cart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_border"
+            android:id="@+id/baddToCart"
+            android:padding="5dp"
+            android:layout_weight="1"
+            android:onClick="addToCart" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <Button
+            android:text="Find In Store"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_border"
+            android:id="@+id/bfindInStore"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:onClick="findInStore"
+             />
+
+    </LinearLayout>
 
 </RelativeLayout>
 

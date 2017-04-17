@@ -108,6 +108,10 @@ public class SyncCartScreen extends AppCompatActivity {
 
     private void connectWithBT(BluetoothDevice bt) {
 
+
+        //  BluetoothChatService btservice = new BluetoothChatService(this, handler);
+
+        /*
         //////////////////////
         ParcelUuid[] idArray = bt.getUuids();
         java.util.UUID MY_UUID = java.util.UUID.fromString(idArray[0].toString());
@@ -123,7 +127,6 @@ public class SyncCartScreen extends AppCompatActivity {
 
                 mSocket = bt.createInsecureRfcommSocketToServiceRecord(MY_UUID);
             } catch (IOException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
             try {
@@ -143,12 +146,13 @@ public class SyncCartScreen extends AppCompatActivity {
 
             }
         }
+        */
 
             //update shared pref
             SharedPreferences myPref = getSharedPreferences("SmartCart", 0);
             SharedPreferences.Editor editor = myPref.edit();
-            editor.putBoolean("cartconnected", true);
-            editor.putString("btcode", bt.getAddress());
+            editor.putBoolean("isSync", true);
+            //editor.putString("btcode", bt.getAddress());
             editor.commit();
             finish();
 

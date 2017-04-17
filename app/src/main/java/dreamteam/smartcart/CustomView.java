@@ -3,6 +3,7 @@ package dreamteam.smartcart;
 import android.app.Activity;
 import android.content.Context;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -34,19 +35,32 @@ public class CustomView extends View {
     HashMap<Integer, Integer> yVals;
     ArrayList<Integer>grid;
 
+    Integer stx, sty, endx, endy;
+    int counter;
+
     int h,w,numRows,numCols,boxSize,xPos,yPos;
     Cell[][] cells=new Cell[10][15];
 
 
     private Paint paint;
     private Paint linePaint;
+    String itemname;
+    int height, width;
+    private ArrayList<Cell> result;
+    private Canvas c;
 
 
-    public CustomView (Context context){
+    public CustomView (Context context, int sx, int sy, int ex, int ey, String iname){
         super(context);
+        stx=sx;
+        sty=sy;
+        counter=0;
+        endx=ex;
+        endy=ey;
+        itemname=iname;
         paint=new Paint();
         linePaint=new Paint();
-        paint.setColor(Color.BLUE);
+        paint.setColor(Color.WHITE);
         linePaint.setColor(Color.RED);
         xVals=new HashMap<>();
         yVals=new HashMap<>();
@@ -57,8 +71,8 @@ public class CustomView extends View {
         DisplayMetrics metrics = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
-        int height = metrics.heightPixels;
-        int width = metrics.widthPixels;
+        height = metrics.heightPixels;
+        width = metrics.widthPixels;
 
 
         //getting them divisible by 100
@@ -119,12 +133,28 @@ public class CustomView extends View {
 
     @Override
     protected void onDraw(Canvas canvas){
+        System.out.println("On draw is called");
+
+        c = canvas;
+        Paint paint = new Paint();
+        paint.setColor(Color.WHITE);
+        paint.setStyle(Paint.Style.FILL);
+        canvas.drawPaint(paint);
 
         Drawable d= getResources().getDrawable(R.drawable.store);
         d.setBounds(0,0,1000,1500);
         d.draw(canvas);
 
-        // canvas.drawRect(xPos,yPos,xPos+boxSize,yPos+boxSize,paint);
+        paint.setColor(Color.BLACK);
+        paint.setTextSize(60);
+        canvas.drawText("Path to "+ itemname, 350, 1650, paint);
+
+        paint.setTextSize(100);
+        canvas.drawText("Navigation Map",450,2000,paint);
+
+        paint.setTextSize(60);
+        canvas.drawText("Press the back button to go back",600,2200,paint);
+
         int k=0; int m=0;
         for (int i=10; i<h; i+=100){
             // canvas.drawLine(10,i,w,i,linePaint);
@@ -155,23 +185,47 @@ public class CustomView extends View {
         }
         //go from [2,13] to [5,4]
 
-
-        LocationAlgo algo=new LocationAlgo(cells);
-        ArrayList<Cell> result=algo.AStar(cells[3][13],cells[5][5]);
+        if(result==null || result.isEmpty()) {
+            LocationAlgo algo = new LocationAlgo(cells);
+            result = algo.AStar(cells[stx][sty], cells[endx][endy]);
+            counter = result.size();
+        }
         paint.setColor(Color.RED);
         // canvas.drawRect(xVals.get(2),yVals.get(13),xVals.get(2)+100,yVals.get(13)+100,paint);
         //canvas.drawRect(xVals.get(5),yVals.get(4),xVals.get(5)+100,yVals.get(4)+100,paint);
 
 
-        for (int i=0;i<result.size();i++){
+        for (int i=0;i<counter;i++){
             int x=result.get(i).x;
             int y=result.get(i).y;
+            if (i==0){
+                paint.setColor(Color.BLUE);
+            }
             canvas.drawRect(xVals.get(x),yVals.get(y),xVals.get(x)+boxSize,yVals.get(y)+boxSize,paint);
-
-
+            if (i==0){
+                paint.setColor(Color.RED);
+            }
         }
+
+
 
 
     }
 
+    public void setStart(int sx, int sy){
+        stx=sx;
+        sty=sy;
+    }
+
+    public void eraseCells() {
+        int i=counter;
+        if(result==null || i<=0){
+            return;
+        }
+
+
+
+        counter--;
+
+    }
 }

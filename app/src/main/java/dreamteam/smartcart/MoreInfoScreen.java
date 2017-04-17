@@ -27,7 +27,7 @@ public class MoreInfoScreen extends AppCompatActivity {
     TextView tvType;
     TextView tvDesc;
     EditText etAmt;
-    ImageView imgView;
+
 
     String rfid;
     String barcode;
@@ -48,7 +48,7 @@ public class MoreInfoScreen extends AppCompatActivity {
         tvType = (TextView) findViewById(R.id.tvType);
         tvDesc = (TextView) findViewById(R.id.tvDescription);
         etAmt = (EditText) findViewById(R.id.etAmt);
-        imgView=(ImageView) findViewById(R.id.moreInfoImage);
+
 
 
         Intent intent=getIntent();
@@ -117,11 +117,6 @@ public class MoreInfoScreen extends AppCompatActivity {
 
                     tvName.setText(name);
                     tvPrice.setText("$"+price);
-                    if (name.equals("green beans"))
-                    {
-                        imgView.setImageDrawable(getResources().getDrawable(R.drawable.green_beans));
-                    }
-
 
                     sendRFIDrequest();
 
@@ -200,6 +195,7 @@ public class MoreInfoScreen extends AppCompatActivity {
         }
         Intent intent=new Intent(getApplicationContext(),MapActivity.class);
         intent.putExtra("ItemName",name);
+        System.out.println("X="+x);
         intent.putExtra("x",x);
         intent.putExtra("y",y);
         //System.out.println(price);
